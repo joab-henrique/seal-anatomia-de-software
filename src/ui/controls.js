@@ -28,7 +28,7 @@ export class Controls {
           '<article class="practice" style="--d:' +
           index +
           ';--tone:' +
-          layers[index].color +
+          layers[index % layers.length].color +
           '"><span class="practice-icon">' +
           icon(practice.icon) +
           '</span><strong>' +
@@ -38,6 +38,14 @@ export class Controls {
           '</p></article>',
       )
       .join('');
+
+    // Os links são estáticos no HTML; aqui entram só os desenhos, que vivem em icons.js.
+    const marks = ['instagram', 'linkedin'];
+    this.get('social')
+      .querySelectorAll('a')
+      .forEach((link, index) => {
+        link.innerHTML = icon(marks[index]);
+      });
 
     ['toggle', 'advance', 'reset'].forEach((id) =>
       this.get(id).addEventListener('click', actions[id]),
@@ -54,7 +62,7 @@ export class Controls {
   }
 
   /** Etiqueta de posição, nome da camada em destaque, uma frase e o rastro técnico. */
-  caption({ term, title, text, trace }) {
+  caption({ term, title, text }) {
     const termNode = this.get('caption-term');
     termNode.hidden = !term;
     if (term) termNode.textContent = term;
@@ -62,9 +70,6 @@ export class Controls {
     const textNode = this.get('caption-text');
     textNode.hidden = !text;
     if (text) textNode.textContent = text;
-    const traceNode = this.get('caption-trace');
-    traceNode.hidden = !trace;
-    if (trace) traceNode.textContent = trace;
     if (this.reduced.matches) return;
     const caption = this.root.querySelector('.caption');
     caption.getAnimations().forEach((animation) => animation.cancel());
@@ -120,6 +125,7 @@ export class Controls {
     });
 
     this.get('practices').hidden = !complete;
+    this.get('social').hidden = mode !== 'intro';
   }
 
   siteLabel(text) {

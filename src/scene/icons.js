@@ -27,6 +27,10 @@ const shapes = {
   gear: '<circle cx="18" cy="18" r="6"/><path d="M18 2v5M18 29v5M34 18h-5M7 18H2M29 7l-3 4M10 25l-4 4M29 29l-3-4M10 11 6 7"/>',
   lock: '<rect x="6" y="15" width="24" height="18" rx="4"/><path d="M12 15V10a6 6 0 0 1 12 0v5"/>',
   clock: '<circle cx="18" cy="18" r="14"/><path d="M18 9v9l6 4"/>',
+  instagram:
+    '<rect x="4" y="4" width="28" height="28" rx="9"/><circle cx="18" cy="18" r="6.6"/><circle cx="25.8" cy="10.2" r="1.1"/>',
+  linkedin:
+    '<rect x="4" y="4" width="28" height="28" rx="7"/><circle cx="11.8" cy="12.4" r="1.1"/><path d="M11.8 16.6V27M18.4 27V16.6M18.4 21.2a4.6 4.6 0 0 1 9.2 0V27"/>',
 };
 
 export function icon(name) {

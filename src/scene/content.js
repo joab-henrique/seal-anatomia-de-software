@@ -76,7 +76,7 @@ const useCase =
     .join('') +
   '</div>';
 
-/** Domínio: uma invariante escrita em português, com os dois desfechos. */
+/** Domínio: a regra escrita em português, com os dois desfechos. */
 const domain =
   '<div class="simple-diagram rules-diagram"><div class="diagram-piece rule-question">' +
   icon('person') +
@@ -87,7 +87,7 @@ const domain =
   '<div class="diagram-piece decision muted">' +
   icon('return') +
   '<span><b>Sim</b>Regra bloqueia</span></div></div>' +
-  '<span class="diagram-note">invariante: 1 candidatura ativa por pessoa</span></div>';
+  '<span class="diagram-note">regra: 1 candidatura ativa por pessoa</span></div>';
 
 /** Persistência: o mapeamento entre objeto e linha da tabela. */
 const persistence =

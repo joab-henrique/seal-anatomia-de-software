@@ -32,11 +32,11 @@ Qualquer hospedagem estática também serve: basta publicar o conteúdo de `dist
 
 ## Percorrer
 
-1. **Começar** aproxima a câmera do notebook e abre as oito camadas.
-2. Cada passo mostra o nome da camada em destaque, uma frase de explicação e o rastro técnico da operação.
+1. **Começar** aproxima a câmera do notebook e abre as oito camadas. A abertura também traz os links da liga no Instagram e no LinkedIn.
+2. Cada passo mostra o nome da camada em destaque e uma frase de explicação.
 3. A trilha numerada avança, volta ou pula direto para qualquer passo. As setas **←** e **→** do teclado fazem o mesmo.
 4. Nada avança sozinho: não há temporizador em nenhum ponto.
-5. Depois da infraestrutura, a resposta volta à tela e aparecem as oito práticas da engenharia de software.
+5. Depois da infraestrutura, a resposta volta à tela e aparecem as nove práticas da engenharia de software.
 6. **Explorar as camadas** libera a maquete: toque em uma camada, arraste para girar. **↺** ou **Escape** reinicia.
 
 ## Conteúdo
@@ -54,7 +54,7 @@ As oito camadas usam o termo técnico como título e uma frase em linguagem simp
 | 7   | Banco de dados       | Armazena os dados de forma organizada e durável.                            |
 | 8   | Infraestrutura       | Servidores, rede e monitoramento sustentam todas as camadas ao mesmo tempo. |
 
-O fecho apresenta a disciplina inteira, não só a arquitetura: requisitos, arquitetura, implementação, testes, versionamento, CI/CD, monitoramento e manutenção.
+O fecho apresenta a disciplina inteira, não só a arquitetura: análise de requisitos, gestão de projetos, arquitetura, implementação, testes, versionamento, CI/CD, monitoramento e manutenção.
 
 ## Arquitetura
 

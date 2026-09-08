@@ -10,7 +10,6 @@ export const layers = [
     plain: 'A tela que você vê',
     color: '#9fc0ff',
     definition: 'Mostra as informações e recebe o que você digita ou toca.',
-    example: 'o botão “Quero fazer parte”',
   },
   {
     code: 'FE',
@@ -18,7 +17,6 @@ export const layers = [
     plain: 'O código que roda no seu aparelho',
     color: '#7fd4f2',
     definition: 'Reage ao clique, confere os campos e monta o pedido ao servidor.',
-    example: 'valida o e-mail antes de enviar',
   },
   {
     code: 'API',
@@ -26,7 +24,6 @@ export const layers = [
     plain: 'A porta de entrada do sistema',
     color: '#a99cf5',
     definition: 'Endereços combinados (endpoints) que recebem pedidos e devolvem respostas.',
-    example: 'POST /candidaturas',
   },
   {
     code: 'APP',
@@ -34,7 +31,6 @@ export const layers = [
     plain: 'Quem coordena os passos',
     color: '#e39fd8',
     definition: 'Define a ordem do caso de uso. Organiza, mas não decide as regras.',
-    example: 'buscar → validar → salvar → responder',
   },
   {
     code: 'DOM',
@@ -42,7 +38,6 @@ export const layers = [
     plain: 'As regras do mundo real',
     color: '#f0c98a',
     definition: 'Guarda as regras de negócio, que existiriam mesmo sem computador.',
-    example: '1 candidatura aberta por pessoa',
   },
   {
     code: 'REP',
@@ -50,7 +45,6 @@ export const layers = [
     plain: 'A ponte com o banco',
     color: '#9adfa4',
     definition: 'O repositório traduz objetos do sistema em registros do banco.',
-    example: 'repositorio.salvar(candidatura)',
   },
   {
     code: 'DB',
@@ -58,7 +52,6 @@ export const layers = [
     plain: 'Onde a informação fica guardada',
     color: '#7fd7c6',
     definition: 'Armazena os dados de forma organizada e durável.',
-    example: 'tabela candidaturas · 1 linha nova',
   },
   {
     code: 'INFRA',
@@ -66,6 +59,5 @@ export const layers = [
     plain: 'A base que mantém tudo no ar',
     color: '#8fa8e0',
     definition: 'Servidores, rede e monitoramento sustentam todas as camadas ao mesmo tempo.',
-    example: 'disponível a qualquer hora',
   },
 ];

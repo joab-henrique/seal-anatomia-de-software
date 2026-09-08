@@ -11,7 +11,6 @@
 
 @media (max-width: 1023px) {
   .practice-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: 560px;
   }
   .practice p {
@@ -69,10 +68,6 @@
   .caption > p {
     font-size: 13px;
   }
-  .trace {
-    font-size: 9.5px !important;
-    padding: 5px 10px;
-  }
   .practice-grid {
     gap: 7px;
   }
@@ -102,9 +97,6 @@
   }
 }
 @media (max-height: 560px) {
-  .trace {
-    display: none !important;
-  }
   .panel {
     bottom: 14px;
     gap: 9px;

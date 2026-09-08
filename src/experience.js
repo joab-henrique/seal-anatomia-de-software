@@ -41,7 +41,6 @@ export class Experience {
           term: 'Passo ' + (step + 1) + ' de ' + guide.length,
           title: layers[entry.layer].term,
           text: entry.text,
-          trace: entry.trace,
         });
         this.render();
       },
@@ -162,7 +161,6 @@ export class Experience {
       term: 'Camada ' + (index + 1) + ' de ' + layers.length,
       title: layer.term,
       text: layer.definition,
-      trace: 'Ex.: ' + layer.example,
     });
     this.render();
   }

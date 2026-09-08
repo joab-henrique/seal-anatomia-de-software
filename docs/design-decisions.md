@@ -2,9 +2,9 @@
 
 ## Vocabulário
 
-O público é leigo, mas a liga é de engenharia de software: usar apelidos no lugar dos termos reais economizaria uma dúvida e custaria o aprendizado. Cada camada exibe o termo correto como título — Interface do usuário, Front-end, API, Camada de aplicação, Domínio, Persistência, Banco de dados, Infraestrutura — seguido de uma frase em linguagem comum e do rastro técnico da operação (`POST /candidaturas`, `invariante verificada`, `1 linha nova`).
+O público é leigo, mas a liga é de engenharia de software: usar apelidos no lugar dos termos reais economizaria uma dúvida e custaria o aprendizado. Cada camada exibe o termo correto como título — Interface do usuário, Front-end, API, Camada de aplicação, Domínio, Persistência, Banco de dados, Infraestrutura — seguido de uma única frase em linguagem comum. Nenhum outro elemento disputa espaço com essa frase.
 
-O fecho existe porque arquitetura é só uma parte da disciplina. Requisitos, testes, versionamento, CI/CD, monitoramento e manutenção aparecem juntos, para que ninguém saia achando que engenharia de software é desenhar caixas.
+O fecho existe porque arquitetura é só uma parte da disciplina. Análise de requisitos, gestão de projetos, testes, versionamento, CI/CD, monitoramento e manutenção aparecem juntos, para que ninguém saia achando que engenharia de software é só desenhar caixas.
 
 O texto é curto de propósito: a leitura acontece de pé, num evento, entre uma conversa e outra. Uma frase por passo, com o nome da camada como maior elemento da tela.
 

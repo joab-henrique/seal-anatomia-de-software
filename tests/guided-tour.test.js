@@ -57,9 +57,8 @@ test('a narrativa percorre as oito camadas, da interface à infraestrutura', () 
   );
 });
 
-test('cada passo cabe em uma frase e deixa o rastro técnico', () => {
+test('cada passo cabe em uma frase curta', () => {
   for (const step of guide) {
-    assert.ok(step.trace.length > 0, 'todo passo mostra o rastro técnico da operação');
     assert.ok(step.text.length <= 110, `passo muito longo: ${layers[step.layer].term}`);
     assert.ok(step.action.length <= 22, `botão muito longo: ${step.action}`);
   }
@@ -69,7 +68,9 @@ test('cada passo cabe em uma frase e deixa o rastro técnico', () => {
   }
 });
 
-test('o fecho apresenta as práticas da engenharia de software', () => {
-  assert.equal(practices.length, layers.length);
+test('o fecho apresenta as práticas da engenharia de software, além da arquitetura', () => {
+  assert.ok(practices.length > layers.length, 'a disciplina é maior que as oito camadas vistas');
+  assert.ok(practices.some((practice) => /requisito/i.test(practice.term)));
+  assert.ok(practices.some((practice) => /gest[ãa]o/i.test(practice.term)));
   assert.ok(practices.every((practice) => practice.term && practice.text.length <= 60));
 });
