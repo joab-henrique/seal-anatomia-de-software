@@ -4,7 +4,9 @@
 
 O público é leigo, mas a liga é de engenharia de software: usar apelidos no lugar dos termos reais economizaria uma dúvida e custaria o aprendizado. Cada camada exibe o termo correto como título — Interface do usuário, Front-end, API, Camada de aplicação, Domínio, Persistência, Banco de dados, Infraestrutura — seguido de uma única frase em linguagem comum. Nenhum outro elemento disputa espaço com essa frase.
 
-O fecho existe porque arquitetura é só uma parte da disciplina. Análise de requisitos, gestão de projetos, testes, versionamento, CI/CD, monitoramento e manutenção aparecem juntos, para que ninguém saia achando que engenharia de software é só desenhar caixas.
+O fecho existe porque arquitetura é só uma parte da disciplina. Análise de requisitos, gestão de processos, testes, versionamento, DevOps, monitoramento e manutenção aparecem juntos, para que ninguém saia achando que engenharia de software é só desenhar caixas.
+
+A liga se organiza em torno de quatro eixos: arquitetura, gestão de processos, testes e DevOps. Em vez de abrir a experiência com uma lista explícita deles, três passos da jornada guiada dão um aceno curto e não técnico a cada eixo que não é a arquitetura: o passo da aplicação liga a ordem do trabalho à lógica de organizar um time, o do domínio liga uma regra de negócio a um teste bem escrito, e o da infraestrutura nomeia o DevOps diretamente. A arquitetura já é o fio condutor da jornada inteira; não precisa de um aceno à parte.
 
 O texto é curto de propósito: a leitura acontece de pé, num evento, entre uma conversa e outra. Uma frase por passo, com o nome da camada como maior elemento da tela.
 

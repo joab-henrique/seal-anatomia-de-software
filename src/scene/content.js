@@ -27,14 +27,14 @@ const tile = (symbol, label, extra = '') =>
   label +
   '</strong></div>';
 
-/** Front-end: o clique vira uma requisição HTTP com método, caminho e corpo. */
+/** Front-end: o clique vira um pedido HTTP com método, caminho e corpo. */
 const request =
   '<div class="simple-diagram request-diagram">' +
   tile('touch', 'Seu clique') +
   arrow('monta') +
   '<div class="diagram-piece packet"><span class="packet-line"><b>POST</b>/candidaturas</span>' +
   '<code>{<br>&nbsp;&nbsp;"nome": "…",<br>&nbsp;&nbsp;"curso": "…"<br>}</code>' +
-  '<small>requisição HTTP</small></div></div>';
+  '<small>pedido HTTP</small></div></div>';
 
 /** API: um contrato de endpoints, não uma caixa mágica. */
 const api =

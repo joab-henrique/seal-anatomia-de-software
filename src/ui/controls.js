@@ -4,7 +4,7 @@ import { icon } from '../scene/icons.js';
 
 /**
  * O painel é o único lugar onde se lê e se clica. O maior elemento da tela é sempre
- * o nome da camada em foco; a trilha de oito botões mostra onde a requisição está.
+ * o nome da camada em foco; a trilha de oito botões mostra onde o pedido está.
  */
 export class Controls {
   constructor(root, actions) {
@@ -115,7 +115,7 @@ export class Controls {
     this.get('rail').hidden = !(guided || explore);
     this.get('rail').setAttribute(
       'aria-label',
-      guided ? 'Ir para um passo da requisição' : 'Escolher uma camada',
+      guided ? 'Ir para um passo da candidatura' : 'Escolher uma camada',
     );
     this.rail.forEach((button, index) => {
       button.classList.toggle('active', index === marker);

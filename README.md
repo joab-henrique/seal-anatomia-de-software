@@ -54,7 +54,7 @@ As oito camadas usam o termo técnico como título e uma frase em linguagem simp
 | 7   | Banco de dados       | Armazena os dados de forma organizada e durável.                            |
 | 8   | Infraestrutura       | Servidores, rede e monitoramento sustentam todas as camadas ao mesmo tempo. |
 
-O fecho apresenta a disciplina inteira, não só a arquitetura: análise de requisitos, gestão de projetos, arquitetura, implementação, testes, versionamento, CI/CD, monitoramento e manutenção.
+O fecho apresenta a disciplina inteira, não só a arquitetura: análise de requisitos, gestão de processos, arquitetura, implementação, testes, versionamento, DevOps, monitoramento e manutenção.
 
 ## Arquitetura
 
@@ -64,7 +64,7 @@ src/
   experience.js              Modos, navegação e legendas
   data/
     layers.js                Termos, cores e explicações das camadas
-    guide.js                 Passos da requisição, fecho e práticas
+    guide.js                 Passos do pedido, fecho e práticas
   scene/
     intro-world.js           Pessoa, sala, notebook e câmera WebGL
     art-direction.js         Geometrias, cabelo, mãos e ambientação

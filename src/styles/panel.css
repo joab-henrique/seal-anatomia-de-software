@@ -138,7 +138,6 @@
   text-wrap: pretty;
 }
 
-/* ---------- Ações ---------- */
 .panel-actions {
   display: flex;
   gap: 9px;

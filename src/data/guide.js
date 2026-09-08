@@ -1,4 +1,8 @@
-/** Uma requisição, oito paradas. O nome da camada é o título; aqui fica só o essencial. */
+/**
+ * Um pedido, oito paradas. O nome da camada é o título; aqui fica só o essencial.
+ * Em três pontos (passos 3, 4 e 7), a frase também dá um aceno curto a um dos
+ * outros eixos da liga (gestão de processos, testes, DevOps), sem virar rótulo.
+ */
 export const guide = [
   {
     layer: 0,
@@ -17,12 +21,12 @@ export const guide = [
   },
   {
     layer: 3,
-    text: 'Define a ordem do trabalho: buscar, validar, salvar e responder.',
+    text: 'Define a ordem do trabalho: a mesma lógica por trás de organizar um time.',
     action: 'Conferir as regras',
   },
   {
     layer: 4,
-    text: 'Ninguém pode ter duas candidaturas abertas. Isso é uma regra de negócio.',
+    text: 'Ninguém pode ter duas candidaturas abertas: uma regra de negócio que um bom teste sempre confere.',
     action: 'Gravar',
   },
   {
@@ -37,7 +41,7 @@ export const guide = [
   },
   {
     layer: 7,
-    text: 'Servidores, rede e monitoramento seguram as sete camadas ao mesmo tempo.',
+    text: 'Servidores, rede e monitoramento seguram as sete camadas. Chegar aqui sem quebrar nada é DevOps.',
     action: 'Ver a resposta',
   },
 ];
@@ -56,12 +60,16 @@ export const practices = [
     term: 'Análise de requisitos',
     text: 'Descobrir e documentar o que o software precisa fazer.',
   },
-  { icon: 'clock', term: 'Gestão de projetos', text: 'Planejar prazos, pessoas e riscos do time.' },
+  {
+    icon: 'gear',
+    term: 'Gestão de processos',
+    text: 'Organiza como o time trabalha, entrega e melhora.',
+  },
   { icon: 'system', term: 'Arquitetura', text: 'Definir as partes e como elas conversam.' },
   { icon: 'code', term: 'Implementação', text: 'Escrever código que outras pessoas leem.' },
   { icon: 'check', term: 'Testes', text: 'Provar que funciona, de forma automática.' },
   { icon: 'branch', term: 'Versionamento', text: 'Histórico de tudo, equipe sem conflito.' },
-  { icon: 'pipeline', term: 'CI/CD', text: 'Testar e publicar cada mudança sozinho.' },
+  { icon: 'pipeline', term: 'DevOps', text: 'Publica cada mudança de forma automática e segura.' },
   { icon: 'pulse', term: 'Monitoramento', text: 'Ver o sistema no ar e ser avisado de falhas.' },
-  { icon: 'return', term: 'Manutenção', text: 'Corrigir e evoluir — a maior parte do trabalho.' },
+  { icon: 'return', term: 'Manutenção', text: 'Corrigir e evoluir: a maior parte do trabalho.' },
 ];

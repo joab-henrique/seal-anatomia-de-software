@@ -5,7 +5,7 @@ import { LayerTransitions } from '../animation/layer-transitions.js';
 const GAP = 76;
 const MIDPOINT = (layers.length - 1) / 2;
 
-/** Objetos 3D, gesto de rotação, enquadramento responsivo e o pulso da requisição. */
+/** Objetos 3D, gesto de rotação, enquadramento responsivo e o pulso do pedido. */
 export class SoftwareScene {
   constructor(root, { onLayer, onBackground, onFit }) {
     this.root = root;
@@ -29,7 +29,7 @@ export class SoftwareScene {
       plate.className = 'plate' + (index === 0 ? ' ui-plate' : '');
       plate.style.setProperty('--i', index);
       plate.style.setProperty('--color', layer.color);
-      plate.setAttribute('aria-label', index + 1 + '. ' + layer.term + ' — ' + layer.plain);
+      plate.setAttribute('aria-label', index + 1 + '. ' + layer.term + ': ' + layer.plain);
       const decoration = index
         ? plateHeader(index) + '<i class="corner"></i><i class="corner"></i>'
         : '';
