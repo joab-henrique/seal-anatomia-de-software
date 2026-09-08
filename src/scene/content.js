@@ -86,7 +86,7 @@ const domain =
   '<span><b>Não</b>Registro permitido</span></div>' +
   '<div class="diagram-piece decision muted">' +
   icon('return') +
-  '<span><b>Sim</b>Regra impede duplicar</span></div></div>' +
+  '<span><b>Sim</b>Regra bloqueia</span></div></div>' +
   '<span class="diagram-note">invariante: 1 candidatura ativa por pessoa</span></div>';
 
 /** Persistência: o mapeamento entre objeto e linha da tabela. */
