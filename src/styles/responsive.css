@@ -1,0 +1,131 @@
+/* Telas grandes: mais respiro e tipografia um pouco maior. */
+@media (min-width: 1400px) {
+  .panel {
+    width: min(720px, calc(100% - 40px));
+    bottom: max(42px, calc(env(safe-area-inset-bottom) + 34px));
+  }
+  .caption > p {
+    font-size: 15.5px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .practice-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 560px;
+  }
+  .practice p {
+    font-size: 11px;
+  }
+}
+
+/* Celular: painel um pouco mais alto, para o polegar alcançar sem esticar. */
+@media (max-width: 700px) {
+  .signature em {
+    display: none;
+  }
+  .panel {
+    bottom: max(38px, calc(env(safe-area-inset-bottom) + 30px));
+    width: calc(100% - 22px);
+    gap: 12px;
+    padding: 16px 16px 14px;
+    border-radius: 22px;
+  }
+  .panel-body {
+    min-height: 96px;
+  }
+  .caption > p {
+    font-size: 13.5px;
+  }
+  .rail button {
+    height: 36px;
+    font-size: 11px;
+  }
+  .main-action {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .panel-actions button {
+    height: 54px;
+    font-size: 14px;
+  }
+}
+
+/* Sem largura para o rótulo, o botão secundário fica só com o ícone. */
+@media (max-width: 560px) {
+  .secondary-action {
+    width: 54px;
+    padding: 0;
+  }
+  .secondary-action span:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .caption h1 {
+    margin: 10px 0 7px;
+  }
+  .caption > p {
+    font-size: 13px;
+  }
+  .trace {
+    font-size: 9.5px !important;
+    padding: 5px 10px;
+  }
+  .practice-grid {
+    gap: 7px;
+  }
+  .practice {
+    padding: 11px;
+  }
+  .practice strong {
+    font-size: 12px;
+  }
+  .practice p {
+    font-size: 10.5px;
+  }
+}
+
+/* Pouca altura: o painel encolhe para a cena continuar respirando. */
+@media (max-height: 700px) {
+  .panel {
+    bottom: max(22px, calc(env(safe-area-inset-bottom) + 18px));
+    gap: 11px;
+    padding: 15px 18px 13px;
+  }
+  .panel-body {
+    min-height: 92px;
+  }
+  .practices h2 {
+    font-size: clamp(17px, 3vw, 23px);
+  }
+}
+@media (max-height: 560px) {
+  .trace {
+    display: none !important;
+  }
+  .panel {
+    bottom: 14px;
+    gap: 9px;
+  }
+  .panel-body {
+    min-height: 74px;
+  }
+  .panel-actions button {
+    height: 48px;
+  }
+  .caption h1 {
+    font-size: clamp(21px, 4vw, 26px);
+    margin: 8px 0 6px;
+  }
+  .caption > p {
+    font-size: 12.5px;
+  }
+  .rail button {
+    height: 32px;
+  }
+  .footnote {
+    display: none;
+  }
+}

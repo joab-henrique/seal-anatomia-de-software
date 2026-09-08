@@ -1,0 +1,81 @@
+/* O fecho: arquitetura é uma parte. Engenharia de software é o conjunto de práticas. */
+.practices {
+  position: absolute;
+  z-index: 5;
+  inset: 0 0 var(--panel-h) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 3vh, 26px);
+  padding: clamp(78px, 12vh, 104px) clamp(18px, 4vw, 40px) clamp(14px, 3vh, 28px);
+  perspective: 1400px;
+  pointer-events: none;
+}
+.practices h2 {
+  margin: 0;
+  font-size: clamp(19px, 3.4vw, 30px);
+  font-weight: 450;
+  letter-spacing: -0.6px;
+  text-align: center;
+  text-wrap: balance;
+  animation: arrive 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(8px, 1.2vw, 14px);
+  width: 100%;
+  max-width: 1000px;
+  transform-style: preserve-3d;
+}
+.practice {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: clamp(12px, 1.6vw, 18px);
+  border-radius: 16px;
+  border: 1px solid #8fb0ff26;
+  background:
+    radial-gradient(ellipse at 20% 0%, #7fa0ff14, transparent 60%),
+    linear-gradient(140deg, #131f3aee, #0c1730 100%);
+  background-color: #101c34e6;
+  box-shadow:
+    0 1px 0 #ffffff14 inset,
+    0 16px 40px #03081666;
+  animation: card-in 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--d) * 70ms + 120ms);
+}
+.practice::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(135deg, #ffffff0d, transparent 40%);
+}
+.practice-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--tone, #9fc0ff);
+  filter: drop-shadow(0 0 14px color-mix(in srgb, var(--tone, #9fc0ff) 45%, transparent));
+}
+.practice-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.practice strong {
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: -0.1px;
+  color: #e8eeff;
+  text-wrap: balance;
+}
+.practice p {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: #93a4c8;
+  text-wrap: pretty;
+}

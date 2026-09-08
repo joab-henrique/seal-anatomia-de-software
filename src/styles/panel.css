@@ -1,0 +1,209 @@
+/* Um único painel, centralizado e no mesmo lugar em todos os passos: o alvo nunca foge. */
+.panel {
+  position: absolute;
+  z-index: 15;
+  left: 50%;
+  bottom: max(30px, calc(env(safe-area-inset-bottom) + 24px));
+  transform: translateX(-50%);
+  width: min(660px, calc(100% - 26px));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 16px clamp(18px, 3vw, 28px) 14px;
+  text-align: center;
+  border-radius: 26px;
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, #101c37d9, #070f26e8);
+  backdrop-filter: blur(22px) saturate(1.25);
+  -webkit-backdrop-filter: blur(22px) saturate(1.25);
+  box-shadow:
+    0 1px 0 #ffffff14 inset,
+    0 26px 70px #01050fa6;
+  transition: opacity 0.5s;
+}
+
+/* ---------- Trilha das oito camadas: progresso e navegação no mesmo controle ---------- */
+.rail {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+  max-width: 420px;
+}
+.rail button {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 38px;
+  border-radius: 11px;
+  border: 1px solid #8fb0ff1f;
+  background: #7fa0ff08;
+  color: #8296bd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font:
+    600 12px/1 ui-monospace,
+    monospace;
+  transition:
+    background 0.25s,
+    color 0.25s,
+    border-color 0.25s,
+    box-shadow 0.3s;
+}
+.rail button span {
+  display: none;
+}
+.rail button:hover {
+  background: #93b4ff18;
+  color: #dbe6ff;
+}
+.rail button.done {
+  color: #c0cfec;
+  background: #93b4ff1c;
+  border-color: #93b4ff38;
+}
+.rail button.active {
+  color: #08122a;
+  background: var(--dot);
+  border-color: var(--dot);
+  box-shadow: 0 6px 22px color-mix(in srgb, var(--dot) 38%, transparent);
+}
+
+/* ---------- Texto: a camada em foco é o maior elemento da tela ---------- */
+.panel-body {
+  width: 100%;
+  min-height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.caption {
+  width: 100%;
+}
+.term {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font:
+    600 9px/1 ui-monospace,
+    monospace;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 6px 12px 6px 10px;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, transparent);
+  border-radius: 30px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  transition:
+    color 0.6s,
+    border-color 0.6s,
+    background 0.6s;
+}
+.term::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 9px currentColor;
+}
+.caption h1 {
+  font-size: clamp(25px, 4.6vw, 34px);
+  line-height: 1.08;
+  letter-spacing: -1px;
+  font-weight: 550;
+  margin: 10px 0 7px;
+  text-wrap: balance;
+  color: #f2f6ff;
+}
+.experience[data-mode='guided'] .caption h1,
+.experience[data-mode='explore'] .caption h1 {
+  color: color-mix(in srgb, var(--accent) 42%, #ffffff);
+  transition: color 0.6s;
+}
+.caption > p {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: #a4b3d3;
+  margin: 0 auto;
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+.trace {
+  display: inline-block;
+  margin-top: 12px !important;
+  font:
+    10px/1.5 ui-monospace,
+    monospace !important;
+  letter-spacing: 0.4px;
+  color: color-mix(in srgb, var(--accent) 72%, white) !important;
+  padding: 6px 12px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 32%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border-radius: 8px;
+  transition: color 0.6s;
+}
+
+/* ---------- Ações ---------- */
+.panel-actions {
+  display: flex;
+  gap: 9px;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+}
+.panel-actions button {
+  height: 54px;
+  border-radius: 16px;
+  padding: 0 24px;
+  font-size: 14.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition:
+    background 0.3s,
+    transform 0.25s,
+    box-shadow 0.3s,
+    opacity 0.3s;
+}
+.panel-actions button:active {
+  transform: scale(0.98);
+}
+.main-action {
+  flex: 0 1 auto;
+  min-width: 220px;
+  background: linear-gradient(125deg, #f4f8ff, #c4d5f7);
+  color: #14224a;
+  font-weight: 600;
+  box-shadow:
+    0 1px 0 #fff inset,
+    0 12px 34px #060d2666,
+    0 0 38px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+.main-action:hover {
+  background: linear-gradient(125deg, #fff, #dbe7ff);
+  box-shadow:
+    0 1px 0 #fff inset,
+    0 14px 38px #060d2677,
+    0 0 52px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+.secondary-action {
+  flex: 0 0 auto;
+  color: #b6c6e8;
+  padding: 0 20px;
+}
+.secondary-action:hover {
+  background: #93b4ff16;
+  color: #fff;
+}
+.action-icon {
+  font-size: 16px;
+  opacity: 0.85;
+}
+.footnote {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 1.6px;
+  color: #5f739c;
+}

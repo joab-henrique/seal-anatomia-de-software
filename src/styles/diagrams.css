@@ -1,0 +1,419 @@
+/* Formas grandes e familiares: uma ideia por camada, sem exigir leitura de código. */
+.simple-diagram {
+  position: absolute;
+  inset: 58px 20px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  color: var(--color);
+}
+.simple-diagram svg {
+  width: 100%;
+  height: 100%;
+}
+.diagram-title {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font:
+    7px ui-monospace,
+    monospace;
+  letter-spacing: 2px;
+  opacity: 0.6;
+}
+.diagram-note {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 9px;
+  letter-spacing: 0.3px;
+  opacity: 0.72;
+}
+.diagram-arrow {
+  position: relative;
+  width: 26px;
+  height: 24px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.diagram-arrow b {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font:
+    7px ui-monospace,
+    monospace;
+  letter-spacing: 1px;
+  font-weight: 400;
+  opacity: 0.75;
+}
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 104px;
+  min-height: 112px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--color) 32%, transparent);
+  border-radius: 14px;
+  background: linear-gradient(130deg, #ffffff0d, #ffffff03);
+  box-shadow: 0 5px 0 #08132955;
+}
+.tile-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+.tile strong {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* O cabeçalho da vista ampliada é maior; o diagrama começa mais abaixo. */
+.detail-object .simple-diagram {
+  top: 68px;
+  right: 26px;
+  bottom: 20px;
+  left: 26px;
+}
+.detail-object .diagram-title {
+  font-size: 8px;
+}
+
+/* Front-end — a requisição HTTP tomando forma */
+.packet {
+  min-width: 152px;
+  padding: 13px 15px;
+  border: 1px solid color-mix(in srgb, var(--color) 45%, transparent);
+  border-radius: 12px;
+  background: linear-gradient(140deg, #ffffff0f, #ffffff03);
+  box-shadow: 0 5px 0 #08132955;
+}
+.packet-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font:
+    10px ui-monospace,
+    monospace;
+  letter-spacing: 0.3px;
+}
+.packet-line b {
+  font-size: 8px;
+  letter-spacing: 1px;
+  padding: 3px 5px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--color) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color) 40%, transparent);
+}
+.packet code {
+  display: block;
+  margin: 9px 0 7px;
+  font:
+    8px/1.6 ui-monospace,
+    monospace;
+  opacity: 0.7;
+  padding-left: 2px;
+  border-left: 1px solid color-mix(in srgb, var(--color) 30%, transparent);
+  padding-left: 8px;
+}
+.packet small {
+  font-size: 8px;
+  letter-spacing: 1.4px;
+  opacity: 0.6;
+}
+
+/* API — o contrato de endpoints */
+.api-diagram {
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 0 14px;
+}
+.endpoint {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 9px 13px;
+  border: 1px solid color-mix(in srgb, var(--color) 26%, transparent);
+  border-radius: 9px;
+  background: #ffffff05;
+  font:
+    11px ui-monospace,
+    monospace;
+}
+.endpoint b {
+  font-size: 8px;
+  letter-spacing: 1px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--color) 40%, transparent);
+}
+.endpoint span {
+  flex: 1;
+  opacity: 0.85;
+}
+.endpoint em {
+  font-style: normal;
+  font-size: 9px;
+  opacity: 0.6;
+}
+.endpoint.live {
+  background: color-mix(in srgb, var(--color) 13%, transparent);
+  border-color: var(--color);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--color) 18%, transparent);
+}
+
+/* Aplicação — o roteiro do caso de uso */
+.usecase-diagram {
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px 0 4px;
+}
+.task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 14px;
+  border: 1px solid color-mix(in srgb, var(--color) 24%, transparent);
+  border-radius: 9px;
+  background: #ffffff05;
+}
+.task > span {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+}
+.task strong {
+  font-size: 13px;
+  font-weight: 400;
+}
+.task svg {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  opacity: 0.65;
+}
+
+/* Domínio — a invariante e seus dois desfechos */
+.rules-diagram {
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 12px;
+}
+.rule-question {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.rule-question svg {
+  width: 32px;
+  height: 32px;
+}
+.rule-question strong {
+  font-size: 17px;
+  font-weight: 500;
+}
+.rule-branches {
+  display: flex;
+  gap: 13px;
+  width: 100%;
+  position: relative;
+}
+.rule-branches::before {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 14px;
+  border: 1px solid color-mix(in srgb, var(--color) 35%, transparent);
+  border-bottom: 0;
+  top: -15px;
+  left: 25%;
+}
+.decision {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex: 1;
+  padding: 12px 11px;
+  border: 1px solid color-mix(in srgb, var(--color) 38%, transparent);
+  border-radius: 11px;
+  background: #ffffff05;
+}
+.decision svg {
+  width: 28px;
+  height: 28px;
+}
+.decision span {
+  font-size: 11px;
+  line-height: 1.6;
+}
+.decision b {
+  display: block;
+  font-size: 15px;
+  font-weight: 500;
+}
+.decision.muted {
+  opacity: 0.62;
+}
+
+/* Persistência — o mapeamento objeto ↔ linha */
+.mapping-diagram {
+  gap: 10px;
+  padding-bottom: 14px;
+}
+.map-card {
+  flex: 1;
+  align-self: stretch;
+  max-width: 150px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--color) 32%, transparent);
+  border-radius: 12px;
+  background: linear-gradient(140deg, #ffffff0d, #ffffff03);
+  box-shadow: 0 5px 0 #08132955;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+.map-card small {
+  font:
+    7px ui-monospace,
+    monospace;
+  letter-spacing: 1.4px;
+  opacity: 0.55;
+}
+.map-card strong {
+  font-size: 14px;
+  font-weight: 550;
+  margin-bottom: 6px;
+}
+.map-card span {
+  font:
+    9px ui-monospace,
+    monospace;
+  opacity: 0.72;
+  padding: 2px 0;
+  border-top: 1px solid color-mix(in srgb, var(--color) 16%, transparent);
+}
+.map-card.row {
+  background: linear-gradient(140deg, color-mix(in srgb, var(--color) 12%, transparent), #ffffff03);
+}
+
+/* Banco — a tabela e a chave primária */
+.table-diagram {
+  flex-direction: column;
+  gap: 0;
+  padding: 14px 0 12px;
+}
+.table-grid {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--color) 26%, transparent);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff05;
+}
+.table-grid > div {
+  display: grid;
+  grid-template-columns: 34px 1fr 1fr 1.1fr 22px;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  font:
+    10px ui-monospace,
+    monospace;
+  border-top: 1px solid color-mix(in srgb, var(--color) 14%, transparent);
+}
+.table-grid > div:first-child {
+  border-top: 0;
+}
+.table-grid .head {
+  font-size: 8px;
+  letter-spacing: 1.3px;
+  opacity: 0.6;
+  background: color-mix(in srgb, var(--color) 9%, transparent);
+}
+.table-grid .head span:first-child,
+.table-grid .row span:first-child {
+  color: var(--color);
+  font-weight: 600;
+}
+.table-grid .row {
+  opacity: 0.68;
+}
+.table-grid .row.fresh {
+  opacity: 1;
+  background: color-mix(in srgb, var(--color) 16%, transparent);
+  box-shadow: inset 0 0 26px color-mix(in srgb, var(--color) 14%, transparent);
+}
+.table-grid .row.fresh svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Infraestrutura — a base larga */
+.infrastructure-diagram {
+  flex-direction: column;
+  gap: 10px;
+  padding: 6px 0 4px;
+}
+.support-top {
+  width: 100%;
+  border-bottom: 1px solid color-mix(in srgb, var(--color) 32%, transparent);
+  text-align: center;
+  padding-bottom: 9px;
+}
+.support-site {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.support-site svg {
+  width: 24px;
+  height: 24px;
+}
+.support-pillars {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+.support-pillars .tile {
+  flex: 1;
+  min-width: 0;
+  min-height: 62px;
+  padding: 10px 6px;
+  gap: 7px;
+}
+.support-pillars .tile-icon {
+  width: 24px;
+  height: 24px;
+}
+.support-pillars .tile strong {
+  font-size: 11px;
+}
+.support-base {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--color) 38%, transparent);
+  background: color-mix(in srgb, var(--color) 10%, transparent);
+  text-align: center;
+  font-size: 11px;
+}

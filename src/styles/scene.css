@@ -1,0 +1,226 @@
+/* A cena WebGL da abertura e a maquete CSS 3D das camadas dividem o mesmo palco. */
+.intro-world {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  opacity: 1;
+  transition: opacity 0.5s;
+  touch-action: none;
+}
+.intro-world canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.intro-world.departed,
+.opened .intro-world,
+.success .intro-world {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  perspective: 1700px;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  transition: opacity 0.7s;
+}
+.stage:active {
+  cursor: grabbing;
+}
+.experience:not(.opened) .stage {
+  opacity: 0;
+  pointer-events: none;
+}
+.success .stage,
+.experience[data-mode='complete'] .stage {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.model-anchor {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 400px;
+  height: 266px;
+  transform: translate(-50%, -50%) scale(var(--scale));
+  transform-style: preserve-3d;
+  transition:
+    top 1s cubic-bezier(0.22, 0.8, 0.25, 1),
+    transform 1s cubic-bezier(0.22, 0.8, 0.25, 1),
+    opacity 0.6s;
+}
+.float {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: levitate 9s ease-in-out infinite;
+}
+.model {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(7deg) rotateY(-12deg) rotateZ(-3deg);
+  transition: transform 1.25s cubic-bezier(0.22, 0.8, 0.25, 1);
+  --spread: 0;
+  --rx: 0deg;
+  --ry: 0deg;
+}
+.opened .model {
+  transform: rotateX(calc(56deg + var(--rx))) rotateY(var(--ry)) rotateZ(-28deg);
+}
+#plates {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+/* O pulso que percorre a pilha durante a narrativa guiada. */
+.signal {
+  position: absolute;
+  left: 194px;
+  top: 126px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 10px #fff,
+    0 0 28px 9px #c9f3ff,
+    0 0 70px 18px #7fb2ff55;
+  transform: translateZ(240px);
+  transform-style: preserve-3d;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 1s cubic-bezier(0.5, 0, 0.2, 1),
+    opacity 0.4s;
+}
+.signal i {
+  position: absolute;
+  inset: -13px;
+  border: 1px solid #cdf0ff;
+  border-radius: 50%;
+  animation: signal 2s infinite;
+}
+.signal i:last-child {
+  transform: rotateX(90deg);
+  animation-delay: 0.5s;
+}
+.guided .signal {
+  opacity: 1;
+}
+
+/* O eixo tracejado que mostra a profundidade real da pilha. */
+.spine {
+  position: absolute;
+  left: 200px;
+  top: 134px;
+  width: 1px;
+  height: 520px;
+  transform-origin: top;
+  transform: translateZ(235px) rotateX(-90deg) scaleY(0);
+  background: repeating-linear-gradient(to bottom, #b9d5ff66 0 3px, transparent 3px 9px);
+  opacity: 0.35;
+  transition: transform 1.3s cubic-bezier(0.22, 0.8, 0.25, 1);
+  pointer-events: none;
+}
+.opened .spine {
+  transform: translateZ(235px) rotateX(-90deg) scaleY(1);
+}
+
+.ground {
+  position: absolute;
+  left: calc((100% - var(--panel-w)) / 2);
+  top: calc((100% - var(--panel-h)) * 0.74);
+  width: 760px;
+  height: 270px;
+  transform: translate(-50%, -50%) rotateX(66deg);
+  pointer-events: none;
+  opacity: 0.45;
+  transition: opacity 1s;
+}
+.ground div {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #91b7ff14;
+  border-radius: 50%;
+}
+.ground div:nth-child(2) {
+  inset: 32px 90px;
+  animation: halo 9s ease-in-out infinite;
+}
+.ground div:nth-child(3) {
+  inset: 64px 180px;
+  background: radial-gradient(
+    ellipse,
+    color-mix(in srgb, var(--accent) 14%, transparent),
+    transparent 70%
+  );
+  border-color: #91b7ff1c;
+}
+.orbit-hint {
+  position: absolute;
+  left: calc((100% - var(--panel-w)) / 2);
+  bottom: calc(var(--panel-h) + 24px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 9px;
+  letter-spacing: 1.6px;
+  color: #7f95c2;
+  opacity: 0;
+  transition: opacity 0.8s;
+  pointer-events: none;
+}
+.orbit-hint span {
+  margin-right: 8px;
+  font-size: 14px;
+}
+.explore .orbit-hint {
+  opacity: 0.7;
+}
+.focused .orbit-hint {
+  opacity: 0;
+}
+
+/* A vista frontal ampliada da camada escolhida. */
+.focus-preview {
+  position: absolute;
+  z-index: 6;
+  width: 400px;
+  height: 266px;
+  transform: translate(-50%, -50%) scale(var(--detail-scale, 1));
+  perspective: 1300px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s;
+}
+.focused .focus-preview {
+  opacity: 1;
+}
+.guided .focus-preview {
+  translate: 0 -6px;
+}
+.focused .model-anchor {
+  opacity: 0;
+}
+/* Com espaço na tela, a pilha continua visível ao lado da camada aberta. */
+.split.focused .model-anchor {
+  opacity: 0.62;
+}
+.guided .plate {
+  pointer-events: none !important;
+}
+
+.entering .panel {
+  opacity: 0.2;
+  transition: opacity 0.6s;
+}
+.entering .panel button {
+  pointer-events: none;
+}

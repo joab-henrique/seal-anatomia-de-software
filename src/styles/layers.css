@@ -1,0 +1,424 @@
+/* ---------- As placas empilhadas ---------- */
+.plate {
+  position: absolute;
+  inset: 0;
+  width: 400px;
+  height: 266px;
+  border-radius: 14px;
+  background: linear-gradient(125deg, color-mix(in srgb, var(--color) 16%, #101f3c), #0d1830f2);
+  border: 1px solid color-mix(in srgb, var(--color) 62%, transparent);
+  transform: translateZ(calc((3.5 - var(--i)) * (5px + var(--spread) * 72px)));
+  transform-style: preserve-3d;
+  transition:
+    transform 1.2s cubic-bezier(0.22, 0.8, 0.25, 1),
+    opacity 0.5s,
+    filter 0.5s,
+    box-shadow 0.5s;
+  box-shadow:
+    0 0 0 1px #0b142966 inset,
+    0 1px 1px #ffffff1c inset,
+    0 18px 40px #02071666;
+  text-align: left;
+  padding: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  outline-offset: 10px;
+}
+.opened .plate {
+  transition-delay: calc(var(--i) * 40ms);
+}
+.focused .plate {
+  transition-delay: 0ms;
+}
+.plate::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  top: 100%;
+  height: 7px;
+  transform-origin: top;
+  transform: rotateX(-90deg);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color) 55%, #101a33), #111e3b);
+  border: 1px solid color-mix(in srgb, var(--color) 45%, transparent);
+  border-radius: 0 0 4px 4px;
+}
+.plate::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  left: 100%;
+  width: 7px;
+  transform-origin: left;
+  transform: rotateY(90deg);
+  background: color-mix(in srgb, var(--color) 28%, #101a33);
+  border: 1px solid color-mix(in srgb, var(--color) 30%, transparent);
+}
+.plate-top {
+  position: absolute;
+  inset: 0;
+  border-radius: 13px;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 23px, #b4ceff05 23px 24px),
+    repeating-linear-gradient(90deg, transparent 0 23px, #b4ceff05 23px 24px);
+  backface-visibility: hidden;
+}
+.plate-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px 17px;
+  color: var(--color);
+  border-bottom: 1px solid color-mix(in srgb, var(--color) 18%, transparent);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color) 9%, transparent), transparent);
+}
+.plate-header strong {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.plate-header b {
+  font:
+    8px/1 ui-monospace,
+    monospace;
+  letter-spacing: 1.4px;
+  opacity: 0.62;
+  white-space: nowrap;
+}
+
+/* A parte de baixo de cada placa é a faixa que fica exposta na pilha: o nome vai ali. */
+.plate-badge {
+  position: absolute;
+  left: 14px;
+  bottom: 11px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px 5px 7px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: var(--color);
+  background: #0a1428d9;
+  border: 1px solid color-mix(in srgb, var(--color) 40%, transparent);
+  box-shadow: 0 4px 14px #030916aa;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+.plate-badge b {
+  font:
+    700 9px/1 ui-monospace,
+    monospace;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+.ui-plate .plate-badge {
+  color: #2b4780;
+  background: #ffffffe0;
+  border-color: #b9cbec;
+}
+.focused .plate:not(.chosen) .plate-badge {
+  opacity: 0.35;
+}
+
+.plate .corner {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--color);
+  border-radius: 50%;
+  opacity: 0.4;
+  bottom: 10px;
+  left: 10px;
+}
+.plate .corner:nth-of-type(2) {
+  left: auto;
+  right: 10px;
+}
+.opened .plate:hover {
+  box-shadow:
+    0 0 40px color-mix(in srgb, var(--color) 24%, transparent),
+    0 0 1px var(--color),
+    0 18px 40px #02071666;
+  filter: brightness(1.1);
+}
+.plate.chosen {
+  box-shadow:
+    0 0 46px color-mix(in srgb, var(--color) 26%, transparent),
+    0 0 1px var(--color);
+}
+.focused .plate:not(.chosen) {
+  opacity: 0.6;
+  filter: saturate(0.6);
+}
+.focused .plate.chosen {
+  transform: translateZ(calc((3.5 - var(--i)) * 76px + 24px)) translateX(-14px);
+}
+.guided .plate.chosen {
+  filter: brightness(1.25);
+}
+
+/* ---------- Vista frontal ampliada ---------- */
+.detail-object {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--color) 72%, white);
+  background:
+    radial-gradient(
+      ellipse at 18% 0%,
+      color-mix(in srgb, var(--color) 18%, transparent),
+      transparent 62%
+    ),
+    linear-gradient(130deg, #1a2b47, #101c32);
+  box-shadow:
+    0 1px 1px #ffffff33 inset,
+    0 6px 0 color-mix(in srgb, var(--color) 26%, #16223a),
+    0 7px 0 color-mix(in srgb, var(--color) 55%, transparent),
+    0 30px 80px #030916cc,
+    0 0 100px color-mix(in srgb, var(--color) 12%, transparent);
+  transform: rotateY(-5deg) rotateX(3deg);
+  will-change: transform, opacity;
+}
+.detail-object::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(125deg, #ffffff0f 0%, transparent 34%, transparent 66%, #ffffff06);
+}
+.detail-object .plate-top {
+  border-radius: 17px;
+}
+.detail-object .plate-header {
+  padding: 16px 22px;
+}
+.detail-object .plate-header strong {
+  font-size: 19px;
+}
+.detail-object .plate-header b {
+  font-size: 10px;
+}
+.detail-object .corner,
+.detail-object .plate-tag {
+  display: none;
+}
+
+/* ---------- O site da SEAL, primeira camada ---------- */
+.ui-plate {
+  background: #f7f9ff;
+  border-color: #dfe8fb;
+  box-shadow:
+    0 18px 50px #02081866,
+    0 0 0 1px #ffffff40 inset;
+  color: #16294d;
+}
+.ui-plate .plate-top {
+  background: #f5f7fc;
+}
+.detail-site {
+  background: #f6f8fd;
+  color: #16294d;
+  border-color: #ccdaf3;
+}
+.detail-site .plate-top {
+  background: #f6f8fd;
+}
+.browser-chrome {
+  height: 29px;
+  padding: 0 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #e9edf6;
+  border-bottom: 1px solid #d7deed;
+}
+.browser-chrome i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #b0bace;
+}
+.browser-chrome i:first-child {
+  background: #cba6b0;
+}
+.browser-chrome i:nth-child(2) {
+  background: #d5c59f;
+}
+.browser-chrome i:nth-child(3) {
+  background: #9fbeb9;
+}
+.address {
+  flex: 1;
+  text-align: center;
+  font-size: 6px;
+  letter-spacing: 0.5px;
+  color: #8995aa;
+}
+.address span {
+  color: #647b98;
+  margin-right: 4px;
+}
+.window-expand {
+  font-size: 9px;
+  color: #9ba8c1;
+}
+.site-nav {
+  height: 43px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #dfe5f0;
+}
+.site-logo {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 800;
+}
+.site-logo img {
+  height: 26px;
+  width: 26px;
+  border-radius: 5px;
+}
+.site-nav > span {
+  font-size: 6px;
+  color: #7d8ba5;
+}
+.site-main {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 22px 8px;
+}
+.site-copy {
+  flex: 1;
+}
+.site-eyebrow {
+  font-size: 5px;
+  letter-spacing: 1.3px;
+  color: #7286b1;
+  font-weight: 700;
+}
+.site-title {
+  font-size: 27px;
+  line-height: 1.05;
+  font-weight: 750;
+  letter-spacing: -1.1px;
+  margin: 7px 0;
+}
+.site-title em {
+  font-style: normal;
+  color: #6d88cb;
+}
+.site-copy p {
+  font-size: 7px;
+  color: #7e8da8;
+  line-height: 1.7;
+  margin: 6px 0 9px;
+}
+.site-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #152853;
+  color: #f5f8ff;
+  font-size: 8px;
+  box-shadow: 0 4px 9px #12244b26;
+  transition: background 0.5s;
+}
+.site-cta b {
+  font-weight: 400;
+  font-size: 12px;
+}
+.success .site-cta,
+.detail-site .site-cta.done {
+  background: #1f6a55;
+}
+.site-art {
+  position: relative;
+  width: 116px;
+  height: 122px;
+  border: 1px solid #d3ddf0;
+  border-radius: 9px;
+  background: radial-gradient(circle at 50% 35%, #f4f7ff, #d7e2f6);
+  overflow: hidden;
+}
+.site-art::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(#8ca8dc20 1px, transparent 1px),
+    linear-gradient(90deg, #8ca8dc20 1px, transparent 1px);
+  background-size: 14px 14px;
+  mask-image: linear-gradient(transparent, #000);
+}
+.art-stack {
+  position: absolute;
+  left: 25px;
+  top: 30px;
+  width: 65px;
+  height: 65px;
+  transform: rotate(-30deg) skew(10deg, 10deg);
+}
+.art-stack i {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(130deg, #edf2ffbb, #86a1d6bb);
+  border: 1px solid #7a98cb;
+  border-radius: 8px;
+  box-shadow: 0 3px 0 #7691c5;
+  animation: mini-stack 6s ease-in-out infinite;
+}
+.art-stack i:nth-child(1) {
+  --step: 2;
+}
+.art-stack i:nth-child(2) {
+  --step: 1;
+}
+.art-stack i:nth-child(3) {
+  --step: 0;
+}
+.site-art > span {
+  position: absolute;
+  bottom: 9px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 5px;
+  letter-spacing: 1.2px;
+  color: #6e84ad;
+}
+.site-footer {
+  padding: 7px 22px;
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  font-size: 5.5px;
+  color: #8d9cb7;
+}
+.site-footer > span:last-child {
+  margin-left: auto;
+  font-size: 5px;
+}
+.site-footer i {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #80a89d;
+  margin-right: 4px;
+}
