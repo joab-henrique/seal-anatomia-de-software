@@ -5,4 +5,5 @@ for (const file of ['index.html', 'logo-seal.png']) await copyFile(file, 'dist/'
 await cp('src', 'dist/src', { recursive: true });
 for (const file of ['three.module.js', 'three.core.js'])
   await copyFile('node_modules/three/build/' + file, 'dist/vendor/' + file);
+await cp('node_modules/lucide/dist/esm', 'dist/vendor/lucide', { recursive: true });
 console.log('Site pronto em dist/. Publique o conteúdo dessa pasta em uma hospedagem estática.');

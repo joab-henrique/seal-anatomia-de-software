@@ -93,11 +93,7 @@ export class Experience {
     this.root.classList.toggle('success', mode === 'complete');
     this.root.dataset.mode = mode;
     this.controls.render(this.state);
-    this.controls.footnote(
-      mode === 'intro' || mode === 'complete'
-        ? 'SIMULAÇÃO · NENHUM DADO É COLETADO OU ENVIADO'
-        : 'VOCÊ AVANÇA NO SEU RITMO · ← → NO TECLADO',
-    );
+    this.controls.footnote('');
   }
 
   advance() {

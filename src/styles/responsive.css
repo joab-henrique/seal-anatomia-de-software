@@ -40,6 +40,20 @@
     height: 36px;
     font-size: 11px;
   }
+  .architecture-note {
+    font-size: 10px;
+  }
+  .practices {
+    justify-content: flex-start;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    pointer-events: auto;
+    padding-top: 76px;
+    padding-bottom: 26px;
+  }
+  .practice-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
   .main-action {
     flex: 1 1 auto;
     min-width: 0;
@@ -55,6 +69,17 @@
   .secondary-action {
     width: 54px;
     padding: 0;
+  }
+  .secondary-action .action-icon {
+    width: 34px;
+    height: 34px;
+    color: #fff;
+    filter: drop-shadow(0 1px 5px #9fc7ffb3);
+  }
+  .secondary-action .action-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke-width: 3;
   }
   .secondary-action span:last-child {
     display: none;

@@ -46,7 +46,7 @@ As oito camadas usam o termo técnico como título e uma frase em linguagem simp
 | #   | Termo                | Em uma frase                                                                |
 | --- | -------------------- | --------------------------------------------------------------------------- |
 | 1   | Interface do usuário | Mostra as informações e recebe o que você digita ou toca.                   |
-| 2   | Front-end            | Reage ao clique, confere os campos e monta o pedido ao servidor.            |
+| 2   | Front-end            | Reage ao clique, orienta o preenchimento e monta o pedido ao servidor.      |
 | 3   | API                  | Endereços combinados (endpoints) que recebem pedidos e devolvem respostas.  |
 | 4   | Camada de aplicação  | Define a ordem do caso de uso. Organiza, mas não decide as regras.          |
 | 5   | Domínio              | Guarda as regras de negócio, que existiriam mesmo sem computador.           |

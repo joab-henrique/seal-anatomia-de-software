@@ -7,42 +7,42 @@ export const guide = [
   {
     layer: 0,
     text: 'A camada que mostra o formulário e recebe o que você preencheu.',
-    action: 'Preparar o envio',
+    action: 'Próximo',
   },
   {
     layer: 1,
-    text: 'O código que roda no seu aparelho valida os campos e monta o pedido.',
-    action: 'Enviar',
+    text: 'O código no seu aparelho orienta o preenchimento e monta o pedido; o servidor confirma as regras.',
+    action: 'Próximo',
   },
   {
     layer: 2,
     text: 'Recebe o pedido num endereço combinado e responde de forma previsível.',
-    action: 'Abrir o caso de uso',
+    action: 'Próximo',
   },
   {
     layer: 3,
     text: 'Define a ordem do trabalho: a mesma lógica por trás de organizar um time.',
-    action: 'Conferir as regras',
+    action: 'Próximo',
   },
   {
     layer: 4,
     text: 'Ninguém pode ter duas candidaturas abertas: uma regra de negócio que um bom teste sempre confere.',
-    action: 'Gravar',
+    action: 'Próximo',
   },
   {
     layer: 5,
     text: 'O repositório converte o objeto em registro e esconde os detalhes do banco.',
-    action: 'Ver onde fica',
+    action: 'Próximo',
   },
   {
     layer: 6,
     text: 'O registro continua salvo depois que você fecha o site.',
-    action: 'Ver a base',
+    action: 'Próximo',
   },
   {
     layer: 7,
     text: 'Servidores, rede e monitoramento seguram as sete camadas. Chegar aqui sem quebrar nada é DevOps.',
-    action: 'Ver a resposta',
+    action: 'Próximo',
   },
 ];
 

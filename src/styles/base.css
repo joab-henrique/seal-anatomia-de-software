@@ -238,8 +238,6 @@ button:disabled {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  font-size: 22px;
-  line-height: 1;
   color: #b6c6e8;
   display: grid;
   place-items: center;
@@ -247,6 +245,11 @@ button:disabled {
     background 0.25s,
     transform 0.4s,
     color 0.25s;
+}
+.reset span {
+  width: 21px;
+  height: 21px;
+  display: grid;
 }
 .reset:hover {
   background: #ffffff12;

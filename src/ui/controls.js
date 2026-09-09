@@ -39,7 +39,10 @@ export class Controls {
       )
       .join('');
 
-    // Os links são estáticos no HTML; aqui entram só os desenhos, que vivem em icons.js.
+    this.get('reset-icon').innerHTML = icon('reset');
+    this.get('advance-icon').innerHTML = icon('arrow');
+
+    // Os links são estáticos no HTML; aqui entram os desenhos Lucide.
     const marks = ['instagram', 'linkedin'];
     this.get('social')
       .querySelectorAll('a')
@@ -96,7 +99,9 @@ export class Controls {
         : selected < 0
           ? 'Recomeçar'
           : 'Ver todas';
-    this.get('toggle-icon').textContent = guided ? '←' : complete || selected < 0 ? '↺' : '⤢';
+    this.get('toggle-icon').innerHTML = icon(
+      guided ? 'back' : complete || selected < 0 ? 'reset' : 'expand',
+    );
     this.get('toggle').setAttribute(
       'aria-label',
       guided ? 'Passo anterior' : complete || selected < 0 ? 'Recomeçar' : 'Ver todas as camadas',
@@ -109,7 +114,7 @@ export class Controls {
         : explore
           ? selected === layers.length - 1
             ? 'Ver todas'
-            : 'Próxima camada'
+            : 'Próximo'
           : 'Começar';
 
     this.get('rail').hidden = !(guided || explore);

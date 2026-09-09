@@ -68,6 +68,13 @@
   border-color: var(--dot);
   box-shadow: 0 6px 22px color-mix(in srgb, var(--dot) 38%, transparent);
 }
+.architecture-note {
+  max-width: 48ch;
+  margin: -3px auto 0;
+  color: #b8c8e8;
+  font-size: 10.5px;
+  line-height: 1.35;
+}
 
 /* ---------- Texto: a camada em foco é o maior elemento da tela ---------- */
 .panel-body {
@@ -83,7 +90,7 @@
   min-height: 0;
 }
 .experience[data-mode='intro'] .caption h1 {
-  margin: 0;
+  margin: 6px 0 0;
 }
 .caption {
   width: 100%;
@@ -183,16 +190,38 @@
 }
 .secondary-action {
   flex: 0 0 auto;
-  color: #b6c6e8;
+  color: #edf3ff;
   padding: 0 20px;
+  font-weight: 600;
+  border-color: #91b2ed80;
+  background: linear-gradient(135deg, #27436fdd, #182b4bd9);
+  box-shadow:
+    0 1px 0 #dbe8ff26 inset,
+    0 8px 24px #03081642;
 }
 .secondary-action:hover {
-  background: #93b4ff16;
+  background: linear-gradient(135deg, #355987, #203b64);
   color: #fff;
 }
+.secondary-action .action-icon {
+  width: 19px;
+  height: 19px;
+  opacity: 1;
+}
+.secondary-action .action-icon svg {
+  stroke-width: 2.5;
+}
 .action-icon {
-  font-size: 16px;
+  width: 17px;
+  height: 17px;
+  display: grid;
+  place-items: center;
   opacity: 0.85;
+}
+.action-icon svg,
+.reset svg {
+  width: 100%;
+  height: 100%;
 }
 /* Só na abertura: quem chega pelo QR code do evento consegue seguir a liga. */
 .social {

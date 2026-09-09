@@ -28,7 +28,9 @@ const server = http.createServer((req, res) => {
     return;
   }
   const source = /^(src|assets)\/[a-zA-Z0-9_/-]+\.(js|css|svg|png)$/.test(file);
-  const vendor = ['vendor/three.module.js', 'vendor/three.core.js'].includes(file);
+  const vendor =
+    ['vendor/three.module.js', 'vendor/three.core.js'].includes(file) ||
+    /^vendor\/lucide\/(?:icons\/)?[a-zA-Z0-9_.-]+\.js$/.test(file);
   if (!allowed.has(file) && !source && !vendor) {
     res.writeHead(404);
     res.end('Não encontrado');
@@ -39,9 +41,11 @@ const server = http.createServer((req, res) => {
     res.end();
     return;
   }
-  const resolved = vendor
-    ? path.join(root, 'node_modules/three/build', path.basename(file))
-    : path.join(root, file);
+  const resolved = file.startsWith('vendor/lucide/')
+    ? path.join(root, 'node_modules/lucide/dist/esm', file.slice('vendor/lucide/'.length))
+    : vendor
+      ? path.join(root, 'node_modules/three/build', path.basename(file))
+      : path.join(root, file);
   fs.readFile(resolved, (err, data) => {
     if (err) {
       res.writeHead(err.code === 'ENOENT' ? 404 : 500);

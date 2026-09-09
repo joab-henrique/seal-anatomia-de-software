@@ -16,7 +16,7 @@ export const layers = [
     term: 'Front-end',
     plain: 'O código que roda no seu aparelho',
     color: '#7fd4f2',
-    definition: 'Reage ao clique, confere os campos e monta o pedido ao servidor.',
+    definition: 'Reage ao clique, orienta o preenchimento e monta o pedido ao servidor.',
   },
   {
     code: 'API',

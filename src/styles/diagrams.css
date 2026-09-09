@@ -19,7 +19,7 @@
   right: 0;
   text-align: center;
   font:
-    7px ui-monospace,
+    9px ui-monospace,
     monospace;
   letter-spacing: 2px;
   opacity: 0.6;
@@ -30,7 +30,7 @@
   left: 0;
   right: 0;
   text-align: center;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.3px;
   opacity: 0.72;
 }
@@ -47,7 +47,7 @@
   left: 50%;
   transform: translateX(-50%);
   font:
-    7px ui-monospace,
+    9px ui-monospace,
     monospace;
   letter-spacing: 1px;
   font-weight: 400;
@@ -87,7 +87,7 @@
   left: 26px;
 }
 .detail-object .diagram-title {
-  font-size: 8px;
+  font-size: 10px;
 }
 
 /* Front-end — a requisição HTTP tomando forma */
@@ -109,7 +109,7 @@
   letter-spacing: 0.3px;
 }
 .packet-line b {
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 1px;
   padding: 3px 5px;
   border-radius: 4px;
@@ -120,7 +120,7 @@
   display: block;
   margin: 9px 0 7px;
   font:
-    8px/1.6 ui-monospace,
+    9px/1.6 ui-monospace,
     monospace;
   opacity: 0.7;
   padding-left: 2px;
@@ -128,7 +128,7 @@
   padding-left: 8px;
 }
 .packet small {
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 1.4px;
   opacity: 0.6;
 }
@@ -153,7 +153,7 @@
     monospace;
 }
 .endpoint b {
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 1px;
   padding: 3px 6px;
   border-radius: 4px;
@@ -294,7 +294,7 @@
 }
 .map-card small {
   font:
-    7px ui-monospace,
+    8px ui-monospace,
     monospace;
   letter-spacing: 1.4px;
   opacity: 0.55;
@@ -306,7 +306,7 @@
 }
 .map-card span {
   font:
-    9px ui-monospace,
+    10px ui-monospace,
     monospace;
   opacity: 0.72;
   padding: 2px 0;
@@ -336,7 +336,7 @@
   gap: 8px;
   padding: 7px 12px;
   font:
-    10px ui-monospace,
+    11px ui-monospace,
     monospace;
   border-top: 1px solid color-mix(in srgb, var(--color) 14%, transparent);
 }
@@ -344,7 +344,7 @@
   border-top: 0;
 }
 .table-grid .head {
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 1.3px;
   opacity: 0.6;
   background: color-mix(in srgb, var(--color) 9%, transparent);

@@ -42,7 +42,7 @@ const api =
   [
     ['POST', '/candidaturas', '201'],
     ['GET', '/candidaturas/:id', '200'],
-    ['GET', '/processos', '200'],
+    ['GET', '/candidaturas/:id/status', '200'],
   ]
     .map(
       ([method, path, status], i) =>
@@ -114,7 +114,7 @@ const infrastructure =
   '<div class="simple-diagram infrastructure-diagram"><div class="support-top">' +
   '<span class="support-site">' +
   icon('screen') +
-  'As sete camadas acima</span></div><div class="support-pillars">' +
+  'Base compartilhada pelas demais camadas</span></div><div class="support-pillars">' +
   tile('server', 'Servidores') +
   tile('network', 'Rede') +
   tile('pulse', 'Monitoramento') +
