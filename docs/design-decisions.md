@@ -33,7 +33,7 @@ Silhueta estilizada, vista de costas: moletom com trama de tecido e a marca da l
 
 O cabelo tem casquete contínuo por baixo e duas camadas de cachos instanciados, com tamanho, profundidade e tom variados, mais mechas mais longas na nuca — é exatamente o que a câmera de abertura enquadra.
 
-As mãos têm dedos independentes: cada um pressiona a tecla em tempos próprios, com pausas, o que faz a digitação parecer digitação. O ponteiro na tela caminha até “Quero fazer parte” e clica, em ciclo — é o gesto que a experiência inteira vai explicar.
+As mãos têm dedos independentes: cada um pressiona a tecla em tempos próprios, com pausas, o que faz a digitação parecer digitação. O ponteiro na tela caminha até “Quero receber novidades” e clica, em ciclo — é o gesto que a experiência inteira vai explicar.
 
 ## Fontes técnicas
 

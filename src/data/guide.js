@@ -1,56 +1,56 @@
 /**
- * Um pedido, oito paradas. O nome da camada é o título; aqui fica só o essencial.
+ * Um cadastro de interesse, oito paradas. A ideia cotidiana vem antes do nome técnico.
  * Em três pontos (passos 3, 4 e 7), a frase também dá um aceno curto a um dos
  * outros eixos da liga (gestão de processos, testes, DevOps), sem virar rótulo.
  */
 export const guide = [
   {
     layer: 0,
-    text: 'A camada que mostra o formulário e recebe o que você preencheu.',
+    text: 'É o que você enxerga: o formulário para receber novidades e os botões em que toca.',
     action: 'Próximo',
   },
   {
     layer: 1,
-    text: 'O código no seu aparelho orienta o preenchimento e monta o pedido; o servidor confirma as regras.',
+    text: 'É o que faz a tela reagir: ajuda no preenchimento e prepara uma mensagem com seus dados.',
     action: 'Próximo',
   },
   {
     layer: 2,
-    text: 'Recebe o pedido num endereço combinado e responde de forma previsível.',
+    text: 'Funciona como uma ponte: leva a mensagem da tela até o sistema e traz a resposta de volta.',
     action: 'Próximo',
   },
   {
     layer: 3,
-    text: 'Define a ordem do trabalho: a mesma lógica por trás de organizar um time.',
+    text: 'Organiza o trabalho por dentro: primeiro confere, depois guarda e por fim responde.',
     action: 'Próximo',
   },
   {
     layer: 4,
-    text: 'Ninguém pode ter duas candidaturas abertas: uma regra de negócio que um bom teste sempre confere.',
+    text: 'Aqui vivem os combinados do sistema. Exemplo: precisamos de um e-mail para enviar novidades.',
     action: 'Próximo',
   },
   {
     layer: 5,
-    text: 'O repositório converte o objeto em registro e esconde os detalhes do banco.',
+    text: 'É a ponte para a memória do sistema: prepara as informações para serem guardadas.',
     action: 'Próximo',
   },
   {
     layer: 6,
-    text: 'O registro continua salvo depois que você fecha o site.',
+    text: 'É a memória do sistema. O interesse continua guardado mesmo depois que você fecha o site.',
     action: 'Próximo',
   },
   {
     layer: 7,
-    text: 'Servidores, rede e monitoramento seguram as sete camadas. Chegar aqui sem quebrar nada é DevOps.',
+    text: 'São os computadores, a conexão e os alertas que mantêm tudo funcionando, dia e noite.',
     action: 'Próximo',
   },
 ];
 
 /** O fecho: a resposta refaz o caminho de volta até a tela. */
 export const conclusion = {
-  term: 'Resposta · 201 Created',
-  title: 'Candidatura recebida.',
-  text: 'A resposta voltou camada por camada, em milissegundos.',
+  term: 'Fim da demonstração',
+  title: 'Você viu o caminho de um clique.',
+  text: 'Você acompanhou como uma confirmação volta do sistema até a tela.',
 };
 
 /** Arquitetura é uma parte. Engenharia de software é o conjunto das práticas. */

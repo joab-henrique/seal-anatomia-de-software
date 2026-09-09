@@ -136,6 +136,15 @@
   color: color-mix(in srgb, var(--accent) 42%, #ffffff);
   transition: color 0.6s;
 }
+.caption h1 .title-detail {
+  display: block;
+  margin-top: 5px;
+  color: #c2cde3;
+  font-size: 0.58em;
+  font-weight: 450;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
 .caption > p {
   font-size: 14.5px;
   line-height: 1.55;

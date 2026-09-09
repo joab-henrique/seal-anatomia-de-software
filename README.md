@@ -1,8 +1,8 @@
 # Anatomia de Software · SEAL
 
-Uma experiência interativa para o público visitante da SEAL, Liga Acadêmica de Engenharia de Software do CIn–UFPE. Em poucos cliques, a pessoa acompanha uma candidatura fictícia atravessar um sistema inteiro e conhece os termos que a engenharia de software realmente usa.
+Uma experiência interativa para o público visitante da SEAL, Liga Acadêmica de Engenharia de Software do CIn–UFPE. Em poucos cliques, a pessoa acompanha um cadastro fictício para receber novidades atravessar um sistema inteiro e conhece os termos que a engenharia de software realmente usa.
 
-A abertura é uma cena 3D em tempo real: alguém de costas, de moletom da SEAL, digitando num notebook, com um ponteiro que caminha até o botão “Quero fazer parte”. Ao tocar em **Começar**, a câmera entra na tela e a arquitetura se abre em oito camadas.
+A abertura é uma cena 3D em tempo real: alguém de costas, de moletom da SEAL, digitando num notebook, com um ponteiro que caminha até o botão “Quero receber novidades”. Ao tocar em **Começar**, a câmera entra na tela e a arquitetura se abre em oito camadas.
 
 ## Executar
 
@@ -104,6 +104,6 @@ Para editar o conteúdo educativo, comece por `src/data/`. Para alterar a abertu
 
 ## Modelo didático
 
-A candidatura é uma simulação: nenhum dado é coletado ou enviado. As regras ilustrativas não representam um edital oficial da SEAL.
+O cadastro de interesse é uma simulação: nenhum dado é coletado ou enviado.
 
 As oito camadas representam responsabilidades possíveis de uma aplicação web, não uma arquitetura obrigatória. A infraestrutura sustenta o sistema inteiro e não é uma etapa posterior ao banco de dados.

@@ -40,6 +40,7 @@ export class Experience {
         this.controls.caption({
           term: 'Passo ' + (step + 1) + ' de ' + guide.length,
           title: layers[entry.layer].term,
+          titleDetail: layers[entry.layer].plain,
           text: entry.text,
         });
         this.render();
@@ -156,6 +157,7 @@ export class Experience {
     this.controls.caption({
       term: 'Camada ' + (index + 1) + ' de ' + layers.length,
       title: layer.term,
+      titleDetail: layer.plain,
       text: layer.definition,
     });
     this.render();
@@ -166,7 +168,7 @@ export class Experience {
     this.state.selected = -1;
     this.scene.setOpen(false);
     this.scene.select(-1);
-    this.controls.siteLabel('Candidatura recebida ✓');
+    this.controls.siteLabel('Demonstração concluída ✓');
     this.controls.caption(conclusion);
     this.render();
   }
@@ -181,7 +183,7 @@ export class Experience {
     this.scene.resetRotation();
     this.scene.setOpen(false);
     this.scene.setInteractive(true);
-    this.controls.siteLabel('Quero fazer parte');
+    this.controls.siteLabel('Quero receber novidades');
     this.controls.caption(INTRO);
     this.render();
   }

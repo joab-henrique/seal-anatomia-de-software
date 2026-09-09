@@ -6,9 +6,9 @@ const site =
   '<div class="browser-chrome"><i></i><i></i><i></i><span class="address"><span>◍</span> seja.seal.cin.ufpe.br · demonstração</span><span class="window-expand">⤢</span></div>' +
   '<div class="site-nav"><div class="site-logo"><img src="logo-seal.png" alt="">SEAL</div><span>LIGA ACADÊMICA DE ENGENHARIA DE SOFTWARE</span></div>' +
   '<div class="site-main"><div class="site-copy"><span class="site-eyebrow">PESSOAS. IDEIAS. POSSIBILIDADES.</span>' +
-  '<div class="site-title">Seu próximo<br>passo é <em>na SEAL.</em></div>' +
-  '<p>Aprenda, crie e cresça<br>junto com a nossa liga.</p>' +
-  '<span class="site-cta"><span id="site-cta-label" class="site-cta-label">Quero fazer parte</span><b>↗</b></span></div>' +
+  '<div class="site-title">Conheça mais<br>sobre a <em>SEAL.</em></div>' +
+  '<p>Aprenda, crie e acompanhe<br>as novidades da nossa liga.</p>' +
+  '<span class="site-cta"><span id="site-cta-label" class="site-cta-label">Quero receber novidades</span><b>↗</b></span></div>' +
   '<div class="site-art"><div class="art-stack"><i></i><i></i><i></i></div><span>CONSTRUA ALGO MAIOR.</span></div></div>' +
   '<div class="site-footer"><span><i></i> Conectando pessoas e tecnologia</span><span>CIn · UFPE</span></div>';
 
@@ -32,17 +32,17 @@ const request =
   '<div class="simple-diagram request-diagram">' +
   tile('touch', 'Seu clique') +
   arrow('monta') +
-  '<div class="diagram-piece packet"><span class="packet-line"><b>POST</b>/candidaturas</span>' +
-  '<code>{<br>&nbsp;&nbsp;"nome": "…",<br>&nbsp;&nbsp;"curso": "…"<br>}</code>' +
-  '<small>pedido HTTP</small></div></div>';
+  '<div class="diagram-piece packet"><span class="packet-line"><b>POST</b>/interesses</span>' +
+  '<code>{<br>&nbsp;&nbsp;"nome": "…",<br>&nbsp;&nbsp;"email": "…"<br>}</code>' +
+  '<small>uma mensagem para o sistema (HTTP)</small></div></div>';
 
 /** API: um contrato de endpoints, não uma caixa mágica. */
 const api =
-  '<div class="simple-diagram api-diagram"><span class="diagram-title">CONTRATO DA API</span>' +
+  '<div class="simple-diagram api-diagram"><span class="diagram-title">CAMINHOS DE CONVERSA · API</span>' +
   [
-    ['POST', '/candidaturas', '201'],
-    ['GET', '/candidaturas/:id', '200'],
-    ['GET', '/candidaturas/:id/status', '200'],
+    ['POST', '/interesses', '201'],
+    ['GET', '/interesses/:id', '200'],
+    ['GET', '/novidades', '200'],
   ]
     .map(
       ([method, path, status], i) =>
@@ -57,12 +57,12 @@ const api =
         '</em></div>',
     )
     .join('') +
-  '<span class="diagram-note">cada endpoint atende um tipo de pedido</span></div>';
+  '<span class="diagram-note">cada caminho atende uma mensagem diferente</span></div>';
 
-/** Aplicação: o roteiro do caso de uso, em ordem. */
+/** Aplicação: o roteiro do cadastro de interesse, em ordem. */
 const useCase =
-  '<div class="simple-diagram usecase-diagram"><span class="diagram-title">CASO DE USO · REGISTRAR CANDIDATURA</span>' +
-  ['Buscar a pessoa', 'Validar as regras', 'Gravar no banco', 'Responder ao front-end']
+  '<div class="simple-diagram usecase-diagram"><span class="diagram-title">O QUE O SISTEMA FAZ</span>' +
+  ['Ler os dados', 'Validar o contato', 'Gravar no banco', 'Responder ao front-end']
     .map(
       (text, i) =>
         '<div class="diagram-piece task"><span>' +
@@ -76,38 +76,38 @@ const useCase =
     .join('') +
   '</div>';
 
-/** Domínio: a regra escrita em português, com os dois desfechos. */
+/** Domínio: uma regra de contato escrita em português, com os dois desfechos. */
 const domain =
   '<div class="simple-diagram rules-diagram"><div class="diagram-piece rule-question">' +
   icon('person') +
-  '<strong>Já existe candidatura aberta?</strong></div><div class="rule-branches">' +
+  '<strong>O e-mail está preenchido?</strong></div><div class="rule-branches">' +
   '<div class="diagram-piece decision">' +
   icon('check') +
-  '<span><b>Não</b>Registro permitido</span></div>' +
+  '<span><b>Sim</b>Contato registrado</span></div>' +
   '<div class="diagram-piece decision muted">' +
   icon('return') +
-  '<span><b>Sim</b>Regra bloqueia</span></div></div>' +
-  '<span class="diagram-note">regra: 1 candidatura ativa por pessoa</span></div>';
+  '<span><b>Não</b>Pede para completar</span></div></div>' +
+  '<span class="diagram-note">regra: dados de contato são obrigatórios</span></div>';
 
 /** Persistência: o mapeamento entre objeto e linha da tabela. */
 const persistence =
   '<div class="simple-diagram mapping-diagram">' +
-  '<div class="diagram-piece map-card"><small>OBJETO</small><strong>Candidatura</strong>' +
-  '<span>nome</span><span>curso</span><span>criadaEm</span></div>' +
+  '<div class="diagram-piece map-card"><small>OBJETO</small><strong>Interesse</strong>' +
+  '<span>nome</span><span>email</span><span>criadoEm</span></div>' +
   arrow('mapeia') +
-  '<div class="diagram-piece map-card row"><small>LINHA NO BANCO</small><strong>candidaturas</strong>' +
-  '<span>nome · texto</span><span>curso · texto</span><span>criada_em · data</span></div>' +
-  '<span class="diagram-note">o repositório traduz nos dois sentidos</span></div>';
+  '<div class="diagram-piece map-card row"><small>LINHA NO BANCO</small><strong>interesses</strong>' +
+  '<span>nome · texto</span><span>email · texto</span><span>criado_em · data</span></div>' +
+  '<span class="diagram-note">o repositório faz a tradução nos dois sentidos</span></div>';
 
 /** Banco: uma tabela de verdade, com chave primária e o registro novo. */
 const database =
-  '<div class="simple-diagram table-diagram"><span class="diagram-title">TABELA · CANDIDATURAS</span>' +
-  '<div class="table-grid"><div class="diagram-piece head"><span>id</span><span>nome</span><span>curso</span><span>status</span></div>' +
-  '<div class="diagram-piece row"><span>1</span><span>Ana</span><span>CC</span><span>enviada</span></div>' +
-  '<div class="diagram-piece row"><span>2</span><span>Léo</span><span>EC</span><span>enviada</span></div>' +
-  '<div class="diagram-piece row fresh"><span>3</span><span>Você</span><span>SI</span><span>enviada</span>' +
+  '<div class="simple-diagram table-diagram"><span class="diagram-title">TABELA · INTERESSES</span>' +
+  '<div class="table-grid"><div class="diagram-piece head"><span>id</span><span>nome</span><span>tema</span><span>status</span></div>' +
+  '<div class="diagram-piece row"><span>1</span><span>Ana</span><span>Eventos</span><span>novo</span></div>' +
+  '<div class="diagram-piece row"><span>2</span><span>Léo</span><span>Projetos</span><span>novo</span></div>' +
+  '<div class="diagram-piece row fresh"><span>3</span><span>Você</span><span>SEAL</span><span>novo</span>' +
   icon('check') +
-  '</div></div><span class="diagram-note">a coluna id é a chave primária</span></div>';
+  '</div></div><span class="diagram-note">o id é o número que diferencia cada registro</span></div>';
 
 /** Infraestrutura: a base larga que segura as sete camadas acima. */
 const infrastructure =

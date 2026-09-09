@@ -16,7 +16,7 @@ export class Controls {
       const button = document.createElement('button');
       button.type = 'button';
       button.style.setProperty('--dot', layer.color);
-      button.innerHTML = '<b>' + (index + 1) + '</b><span>' + layer.term + '</span>';
+      button.innerHTML = '<b>' + (index + 1) + '</b><span>' + layer.plain + '</span>';
       button.addEventListener('click', () => actions.rail(index));
       this.get('rail').append(button);
       return button;
@@ -64,12 +64,19 @@ export class Controls {
     return this.root.querySelector('#' + id);
   }
 
-  /** Etiqueta de posição, nome da camada em destaque, uma frase e o rastro técnico. */
-  caption({ term, title, text }) {
+  /** Etiqueta de posição, termo técnico, tradução curta e uma explicação. */
+  caption({ term, title, titleDetail, text }) {
     const termNode = this.get('caption-term');
     termNode.hidden = !term;
     if (term) termNode.textContent = term;
-    this.get('caption-title').textContent = title;
+    const titleNode = this.get('caption-title');
+    titleNode.textContent = title;
+    if (titleDetail) {
+      const detail = document.createElement('span');
+      detail.className = 'title-detail';
+      detail.textContent = titleDetail;
+      titleNode.append(detail);
+    }
     const textNode = this.get('caption-text');
     textNode.hidden = !text;
     if (text) textNode.textContent = text;
@@ -120,13 +127,16 @@ export class Controls {
     this.get('rail').hidden = !(guided || explore);
     this.get('rail').setAttribute(
       'aria-label',
-      guided ? 'Ir para um passo da candidatura' : 'Escolher uma camada',
+      guided ? 'Ir para um passo do cadastro de interesse' : 'Escolher uma camada',
     );
     this.rail.forEach((button, index) => {
       button.classList.toggle('active', index === marker);
       button.classList.toggle('done', guided && index < step);
       button.setAttribute('aria-pressed', String(index === marker));
-      button.setAttribute('aria-label', index + 1 + '. ' + layers[index].term);
+      button.setAttribute(
+        'aria-label',
+        index + 1 + '. ' + layers[index].plain + '. Termo técnico: ' + layers[index].term,
+      );
     });
 
     this.get('practices').hidden = !complete;
