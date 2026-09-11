@@ -38,7 +38,6 @@ export class Experience {
         this.scene.select(entry.layer);
         this.scene.moveSignal(entry.layer);
         this.controls.caption({
-          term: 'Passo ' + (step + 1) + ' de ' + guide.length,
           title: layers[entry.layer].term,
           titleDetail: layers[entry.layer].plain,
           text: entry.text,

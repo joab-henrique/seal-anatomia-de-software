@@ -9,8 +9,8 @@ const site =
   '<div class="site-title">Conheça mais<br>sobre a <em>SEAL.</em></div>' +
   '<p>Aprenda, crie e acompanhe<br>as novidades da nossa liga.</p>' +
   '<span class="site-cta"><span id="site-cta-label" class="site-cta-label">Quero receber novidades</span><b>↗</b></span></div>' +
-  '<div class="site-art"><div class="art-stack"><i></i><i></i><i></i></div><span>CONSTRUA ALGO MAIOR.</span></div></div>' +
-  '<div class="site-footer"><span><i></i> Conectando pessoas e tecnologia</span><span>CIn · UFPE</span></div>';
+  '<div class="site-art"><div class="art-stack"><i></i><i></i><i></i></div></div></div>' +
+  '<div class="site-footer"><span>CIn · UFPE</span></div>';
 
 const arrow = (label = '') =>
   '<span class="diagram-arrow">' +
@@ -32,17 +32,17 @@ const request =
   '<div class="simple-diagram request-diagram">' +
   tile('touch', 'Seu clique') +
   arrow('monta') +
-  '<div class="diagram-piece packet"><span class="packet-line"><b>POST</b>/interesses</span>' +
+  '<div class="diagram-piece packet"><span class="packet-line"><b>Envia</b>um novo interesse</span>' +
   '<code>{<br>&nbsp;&nbsp;"nome": "…",<br>&nbsp;&nbsp;"email": "…"<br>}</code>' +
   '<small>uma mensagem para o sistema (HTTP)</small></div></div>';
 
 /** API: um contrato de endpoints, não uma caixa mágica. */
 const api =
-  '<div class="simple-diagram api-diagram"><span class="diagram-title">CAMINHOS DE CONVERSA · API</span>' +
+  '<div class="simple-diagram api-diagram"><span class="diagram-title">CAMINHOS DE CONVERSA</span>' +
   [
-    ['POST', '/interesses', '201'],
-    ['GET', '/interesses/:id', '200'],
-    ['GET', '/novidades', '200'],
+    ['Registrar', 'um novo interesse', 'confirmado'],
+    ['Buscar', 'um interesse específico', 'encontrado'],
+    ['Buscar', 'as novidades', 'encontrado'],
   ]
     .map(
       ([method, path, status], i) =>
@@ -62,7 +62,7 @@ const api =
 /** Aplicação: o roteiro do cadastro de interesse, em ordem. */
 const useCase =
   '<div class="simple-diagram usecase-diagram"><span class="diagram-title">O QUE O SISTEMA FAZ</span>' +
-  ['Ler os dados', 'Validar o contato', 'Gravar no banco', 'Responder ao front-end']
+  ['Ler os dados', 'Validar o contato', 'Gravar no banco', 'Responder para a tela']
     .map(
       (text, i) =>
         '<div class="diagram-piece task"><span>' +
@@ -131,16 +131,8 @@ export const internals = [
   infrastructure,
 ];
 
-/** Cabeçalho de cada placa: termo técnico à esquerda, sigla à direita. */
+/** Cabeçalho de cada placa: o termo técnico da camada. */
 export function plateHeader(index) {
   const layer = layers[index];
-  return (
-    '<div class="plate-header"><strong>' +
-    layer.term +
-    '</strong><b>' +
-    String(index + 1).padStart(2, '0') +
-    ' · ' +
-    layer.code +
-    '</b></div>'
-  );
+  return '<div class="plate-header"><strong>' + layer.term + '</strong></div>';
 }

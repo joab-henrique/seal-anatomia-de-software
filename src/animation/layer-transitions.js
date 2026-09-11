@@ -34,14 +34,13 @@ export class LayerTransitions {
       const outgoing = this.play(
         previous,
         [
-          { transform: REST, opacity: 1, filter: 'blur(0px)' },
+          { transform: REST, opacity: 1 },
           {
             transform:
               'translate3d(' +
               -direction * 28 +
               'px,-32px,-180px) rotateX(35deg) rotateZ(-16deg) scale(.72)',
             opacity: 0,
-            filter: 'blur(3px)',
           },
         ],
         { duration: 440, easing: EASE, fill: 'forwards' },
@@ -67,11 +66,10 @@ export class LayerTransitions {
             dy +
             'px,-180px) rotateX(48deg) rotateZ(-23deg) scale(.62)',
           opacity: 0,
-          filter: 'blur(2px)',
           offset: 0,
         },
-        { opacity: 1, filter: 'blur(0px)', offset: 0.35 },
-        { transform: REST, opacity: 1, filter: 'blur(0px)', offset: 1 },
+        { opacity: 1, offset: 0.35 },
+        { transform: REST, opacity: 1, offset: 1 },
       ],
       { duration: 900, delay: previous ? 100 : 0, easing: EASE, fill: 'backwards' },
     );

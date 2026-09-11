@@ -82,14 +82,6 @@
   font-weight: 600;
   letter-spacing: 0.2px;
 }
-.plate-header b {
-  font:
-    8px/1 ui-monospace,
-    monospace;
-  letter-spacing: 1.4px;
-  opacity: 0.62;
-  white-space: nowrap;
-}
 
 /* A parte de baixo de cada placa é a faixa que fica exposta na pilha: o nome vai ali. */
 .plate-badge {
@@ -202,9 +194,6 @@
 }
 .detail-object .plate-header strong {
   font-size: 19px;
-}
-.detail-object .plate-header b {
-  font-size: 10px;
 }
 .detail-object .corner,
 .detail-object .plate-tag {
@@ -413,12 +402,4 @@
 .site-footer > span:last-child {
   margin-left: auto;
   font-size: 5px;
-}
-.site-footer i {
-  display: inline-block;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #80a89d;
-  margin-right: 4px;
 }
