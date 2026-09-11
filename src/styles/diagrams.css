@@ -177,15 +177,19 @@
 /* Aplicação — o roteiro do caso de uso */
 .usecase-diagram {
   flex-direction: column;
-  gap: 7px;
-  padding: 12px 0 4px;
+  justify-content: flex-start;
+  gap: 5px;
+  padding: 22px 0 0;
+}
+.usecase-diagram .diagram-title {
+  top: 2px;
 }
 .task {
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
-  padding: 8px 14px;
+  padding: 6px 12px;
   border: 1px solid color-mix(in srgb, var(--color) 24%, transparent);
   border-radius: 9px;
   background: #ffffff05;

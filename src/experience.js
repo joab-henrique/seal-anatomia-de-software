@@ -69,12 +69,13 @@ export class Experience {
     if (this.transitioning) return;
     const enter = () => {
       this.transitioning = false;
-      this.root.classList.remove('entering');
       this.controls.get('advance').disabled = false;
       this.state.mode = 'guided';
       this.scene.setOpen(true);
       this.scene.setInteractive(false);
       this.tour.start();
+      // Revela o painel somente depois de trocar o texto da abertura pelo da primeira camada.
+      this.root.classList.remove('entering');
     };
     if (!this.intro) {
       enter();

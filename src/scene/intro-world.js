@@ -190,21 +190,18 @@ export class IntroWorld {
     notebook.rotation.y = -0.2;
     this.limb([-1.34, 1.568, -0.06], [-1.2, 1.568, 0.3], 0.012, metal);
 
-    // Plataforma baixa e anéis concêntricos ancoram a cena no espaço.
-    this.mesh(
-      new THREE.CylinderGeometry(2.15, 2.15, 0.055, 80),
-      this.material(0x0c1425, 0.88),
-      [0, -0.045, 0.1],
+    // Um tapete fosco substitui o pedestal com anéis luminosos e deixa a cena mais natural.
+    const rugMaterial = this.material(0x182139, 1);
+    rugMaterial.bumpMap = fabricTexture();
+    rugMaterial.bumpMap.wrapS = rugMaterial.bumpMap.wrapT = THREE.RepeatWrapping;
+    rugMaterial.bumpMap.repeat.set(18, 12);
+    rugMaterial.bumpScale = 0.004;
+    const rug = this.mesh(
+      new THREE.CylinderGeometry(2.28, 2.28, 0.028, 80),
+      rugMaterial,
+      [0, -0.052, 0.1],
     );
-    for (const radius of [2.3, 2.5, 2.72]) {
-      const ring = this.mesh(
-        new THREE.TorusGeometry(radius, 0.005, 4, 100),
-        this.material(0x38537c, 0.8),
-        [0, -0.02, 0.1],
-      );
-      ring.rotation.x = Math.PI / 2;
-      ring.castShadow = false;
-    }
+    rug.scale.z = 0.72;
   }
 
   makeScreenTexture() {
@@ -404,8 +401,8 @@ export class IntroWorld {
     for (const side of [-1, 1])
       this.ellipsoid([side * 0.202, 0.25, -0.012], [0.044, 0.071, 0.042], skin, this.head);
 
-    // O capuz tem volume real em torno do pescoço e cai pelas costas.
-    this.ellipsoid([0, 0.995, 0.12], [0.245, 0.135, 0.135], seams, this.torso);
+    // O capuz fica junto ao pescoço, inteiramente atrás da área reservada à marca.
+    this.ellipsoid([0, 1.035, 0.015], [0.2, 0.09, 0.07], seams, this.torso);
     const collar = this.mesh(
       new THREE.TorusGeometry(0.17, 0.052, 12, 32),
       hoodie,
@@ -419,14 +416,14 @@ export class IntroWorld {
     );
     logo.colorSpace = THREE.SRGBColorSpace;
     this.mesh(
-      new THREE.PlaneGeometry(0.37, 0.37),
+      new THREE.PlaneGeometry(0.3, 0.3),
       new THREE.MeshStandardMaterial({
         map: logo,
         roughness: 1,
         polygonOffset: true,
         polygonOffsetFactor: -1,
       }),
-      [0, 0.65, 0.267],
+      [0, 0.55, 0.278],
       this.torso,
     );
 
@@ -437,7 +434,7 @@ export class IntroWorld {
       const arm = new THREE.Group();
       this.torso.add(arm);
       curvedSleeve(this, side, hoodie, arm);
-      this.limb([side * 0.31, 0.4, -0.88], [side * 0.28, 0.4, -0.99], 0.108, seams, arm);
+      this.limb([side * 0.31, 0.455, -0.88], [side * 0.28, 0.5, -0.99], 0.085, seams, arm);
       const { hand, fingers } = buildHand(this, side, { skin }, arm);
       this.arms.push(arm);
       this.hands.push(hand);
@@ -551,7 +548,7 @@ export class IntroWorld {
     });
     this.hands.forEach((hand, i) => {
       hand.rotation.x = Math.sin(t * 2.6 + i * 2.1) * 0.035 * bursts;
-      hand.position.y = 0.415 + Math.sin(t * 1.3 + i) * 0.004;
+      hand.position.y = 0.55 + Math.sin(t * 1.3 + i) * 0.004;
     });
   }
 

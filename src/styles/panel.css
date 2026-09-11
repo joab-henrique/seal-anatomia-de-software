@@ -20,7 +20,9 @@
   box-shadow:
     0 1px 0 #ffffff14 inset,
     0 26px 70px #01050fa6;
-  transition: opacity 0.5s;
+  transition:
+    opacity 0.5s,
+    transform 0.35s;
 }
 
 /* ---------- Trilha das oito camadas: progresso e navegação no mesmo controle ---------- */

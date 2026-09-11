@@ -262,24 +262,37 @@ export function buildHoodie(world, material, parent) {
     parent,
   );
   torso.scale.z = 0.68;
-  // Ombros: um jugo achatado tira o aspecto de garrafa e sustenta as mangas.
-  const yoke = world.ellipsoid([0, 0.9, 0], [0.44, 0.16, 0.3], material, parent);
-  yoke.scale.z = 0.68;
+  // Ombros: o jugo e duas cápsulas sobrepostas formam uma linha contínua até as mangas.
+  // A profundidade já é definida pelo terceiro item da escala; sobrescrevê-la depois
+  // deixava o ombro largo no eixo Z e criava a articulação estranha vista de três quartos.
+  world.ellipsoid([0, 0.9, 0], [0.44, 0.16, 0.205], material, parent);
+  for (const side of [-1, 1]) {
+    const shoulder = world.ellipsoid(
+      [side * 0.365, 0.83, -0.008],
+      [0.155, 0.18, 0.19],
+      material,
+      parent,
+    );
+    shoulder.rotation.z = side * 0.28;
+    shoulder.rotation.x = -0.08;
+  }
   return torso;
 }
 
 export function curvedSleeve(world, side, material, parent) {
   const points = [
-    [side * 0.32, 0.88, 0.01],
-    [side * 0.46, 0.73, -0.01],
-    [side * 0.5, 0.44, -0.17],
-    [side * 0.45, 0.35, -0.43],
-    [side * 0.32, 0.39, -0.86],
-    [side * 0.28, 0.4, -0.99],
+    [side * 0.35, 0.84, -0.005],
+    [side * 0.445, 0.77, -0.025],
+    [side * 0.49, 0.58, -0.105],
+    [side * 0.485, 0.42, -0.24],
+    [side * 0.43, 0.35, -0.47],
+    [side * 0.32, 0.445, -0.86],
+    [side * 0.28, 0.5, -0.99],
   ];
   const curve = new THREE.CatmullRomCurve3(points.map((p) => new THREE.Vector3(...p)));
+  curve.curveType = 'centripetal';
   return world.mesh(
-    new THREE.TubeGeometry(curve, 30, 0.12, 16, false),
+    new THREE.TubeGeometry(curve, 40, 0.118, 20, false),
     material,
     [0, 0, 0],
     parent,
@@ -289,22 +302,28 @@ export function curvedSleeve(world, side, material, parent) {
 /** Mão com dedos independentes: é o que faz a digitação parecer digitação. */
 export function buildHand(world, side, { skin }, parent) {
   const hand = new THREE.Group();
-  hand.position.set(side * 0.27, 0.415, -1.06);
+  // A mão fica alguns centímetros acima da base do notebook; antes, dedos e palma
+  // atravessavam o teclado e desapareciam por causa do teste de profundidade.
+  hand.position.set(side * 0.29, 0.55, -1.055);
+  hand.rotation.y = side * 0.06;
   parent.add(hand);
-  const palm = world.ellipsoid([0, 0, 0], [0.088, 0.042, 0.115], skin, hand);
+  const palm = world.ellipsoid([0, 0, 0], [0.1, 0.05, 0.12], skin, hand);
   palm.castShadow = true;
+
+  // Um pequeno trecho de punho fecha o espaço entre a manga e a palma.
+  world.limb([0, 0.004, 0.065], [0, 0, -0.005], 0.044, skin, hand);
   const fingers = [];
   for (let i = 0; i < 4; i++) {
     const finger = new THREE.Group();
-    finger.position.set(-0.054 + i * 0.036, -0.008, -0.06);
+    finger.position.set(-0.062 + i * 0.041, -0.004, -0.062);
     hand.add(finger);
-    world.limb([0, 0, 0], [0, -0.012, -0.088], 0.0155, skin, finger);
+    world.limb([0, 0, 0], [0, -0.01, -0.1], 0.0175, skin, finger);
     fingers.push(finger);
   }
   const thumb = world.limb(
-    [side * 0.07, -0.006, -0.02],
-    [side * 0.1, -0.014, -0.07],
-    0.018,
+    [side * 0.075, -0.002, -0.012],
+    [side * 0.112, -0.008, -0.072],
+    0.02,
     skin,
     hand,
   );
@@ -318,8 +337,8 @@ export function buildHand(world, side, { skin }, parent) {
  * é exatamente o que a câmera de abertura enquadra.
  */
 export function buildHair(world, material, parent) {
-  const center = new THREE.Vector3(0, 0.288, -0.022);
-  const radii = new THREE.Vector3(0.214, 0.284, 0.222);
+  const center = new THREE.Vector3(0, 0.295, -0.012);
+  const radii = new THREE.Vector3(0.218, 0.286, 0.226);
   const group = new THREE.Group();
   parent.add(group);
 
@@ -330,11 +349,11 @@ export function buildHair(world, material, parent) {
     [center.x, center.y - 0.014, center.z],
     group,
   );
-  cap.scale.set(radii.x * 0.985, radii.y * 1.03, radii.z * 0.985);
+  cap.scale.set(radii.x * 0.99, radii.y * 1.025, radii.z * 0.99);
 
   const layers = [
-    { count: 132, lift: 1.035, size: [0.036, 0.052], reach: -0.62 },
-    { count: 88, lift: 1.12, size: [0.026, 0.042], reach: -0.42 },
+    { count: 112, lift: 1.03, size: [0.027, 0.04], reach: -0.62 },
+    { count: 68, lift: 1.105, size: [0.022, 0.033], reach: -0.38 },
   ];
   const dummy = new THREE.Object3D();
   const tint = new THREE.Color();
@@ -349,14 +368,18 @@ export function buildHair(world, material, parent) {
       const dir = new THREE.Vector3(Math.cos(phi) * ring, y, Math.sin(phi) * ring);
       // O rosto fica livre; a franja só desce até a altura das têmporas.
       if (dir.z < -0.3 && y < 0.46) continue;
-      const jitter = 1 + Math.sin(k * 4.7) * 0.045;
+      const jitter = 1 + Math.sin(k * 4.7) * 0.035;
       dummy.position.set(
         center.x + dir.x * radii.x * lift * jitter,
         center.y + dir.y * radii.y * lift * jitter,
         center.z + dir.z * radii.z * lift * jitter,
       );
       const scale = size[0] + (Math.sin(k * 2.3) * 0.5 + 0.5) * (size[1] - size[0]);
-      dummy.scale.set(scale, scale * (0.86 + Math.sin(k * 1.7) * 0.16), scale);
+      dummy.scale.set(
+        scale * (0.92 + Math.sin(k * 0.83) * 0.08),
+        scale * (0.78 + Math.sin(k * 1.7) * 0.13),
+        scale,
+      );
       dummy.rotation.set(k * 0.7, k * 1.1, 0);
       dummy.updateMatrix();
       curls.setMatrixAt(placed, dummy.matrix);
@@ -370,14 +393,47 @@ export function buildHair(world, material, parent) {
     group.add(curls);
   }
 
+  // Anéis curtos assentados na tangente dão leitura de mechas cacheadas, sem transformar
+  // a silhueta numa coleção uniforme de esferas. O casquete continua fechando os vazios.
+  const curlCount = 54;
+  const curlGeometry = new THREE.TorusGeometry(1, 0.24, 5, 12, Math.PI * 1.72);
+  const curlDetails = new THREE.InstancedMesh(curlGeometry, material, curlCount);
+  const normal = new THREE.Vector3(0, 0, 1);
+  let placedCurls = 0;
+  for (let k = 0; placedCurls < curlCount && k < curlCount * 2; k++) {
+    const phi = k * 2.39996 + 0.6;
+    const y = 0.94 - (k / (curlCount - 1)) * 1.36;
+    const ring = Math.sqrt(Math.max(0, 1 - y * y));
+    const dir = new THREE.Vector3(Math.cos(phi) * ring, y, Math.sin(phi) * ring);
+    if (dir.z < -0.36 && y < 0.42) continue;
+    const size = 0.028 + (Math.sin(k * 2.17) * 0.5 + 0.5) * 0.009;
+    dummy.position.set(
+      center.x + dir.x * radii.x * 1.125,
+      center.y + dir.y * radii.y * 1.125,
+      center.z + dir.z * radii.z * 1.125,
+    );
+    dummy.quaternion.setFromUnitVectors(normal, dir);
+    dummy.rotateZ(k * 1.37);
+    dummy.scale.set(size, size, size * 0.78);
+    dummy.updateMatrix();
+    curlDetails.setMatrixAt(placedCurls, dummy.matrix);
+    const shade = 0.9 + (Math.sin(k * 2.7) * 0.5 + 0.5) * 0.22;
+    curlDetails.setColorAt(placedCurls, tint.setRGB(shade, shade * 0.97, shade * 1.035));
+    placedCurls++;
+  }
+  curlDetails.count = placedCurls;
+  curlDetails.castShadow = true;
+  curlDetails.receiveShadow = true;
+  group.add(curlDetails);
+
   // Nuca: alguns cachos mais longos caem sobre a gola e quebram a linha da esfera.
-  for (let i = 0; i < 9; i++) {
-    const x = (i / 8 - 0.5) * 0.3;
-    const drop = 0.05 + Math.abs(Math.sin(i * 1.9)) * 0.05;
+  for (let i = 0; i < 11; i++) {
+    const x = (i / 10 - 0.5) * 0.31;
+    const drop = 0.038 + Math.abs(Math.sin(i * 1.9)) * 0.045;
     const strand = world.mesh(
-      new THREE.CapsuleGeometry(0.026, drop, 6, 10),
+      new THREE.CapsuleGeometry(0.021, drop, 6, 10),
       material,
-      [center.x + x, center.y - 0.2 - drop * 0.4, center.z + 0.14 - Math.abs(x) * 0.35],
+      [center.x + x, center.y - 0.205 - drop * 0.38, center.z + 0.145 - Math.abs(x) * 0.35],
       group,
     );
     strand.rotation.set(0.28, 0, x * 1.6);
