@@ -43,6 +43,65 @@ export function fabricTexture() {
   return texture;
 }
 
+/** Veios discretos para madeira pintada/laminada, sem imagens externas. */
+export function woodTexture({ floor = false } = {}) {
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 256;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = floor ? '#30394a' : '#887062';
+  ctx.fillRect(0, 0, 256, 256);
+  const rows = floor ? 4 : 8;
+  const rowHeight = 256 / rows;
+  for (let row = 0; row < rows; row++) {
+    const y = row * rowHeight;
+    if (floor) {
+      ctx.strokeStyle = '#1d2635';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(-1, y, 258, rowHeight);
+      const joint = row % 2 ? 74 : 176;
+      ctx.beginPath();
+      ctx.moveTo(joint, y);
+      ctx.lineTo(joint, y + rowHeight);
+      ctx.stroke();
+    }
+    for (let line = 0; line < 5; line++) {
+      ctx.beginPath();
+      ctx.strokeStyle = floor ? '#73809618' : '#3f2e281c';
+      ctx.lineWidth = 1 + (line % 2) * 0.5;
+      for (let x = 0; x <= 256; x += 8) {
+        const grain = Math.sin(x * 0.07 + row * 2.4 + line) * (2.2 + line * 0.25);
+        const py = y + ((line + 1) * rowHeight) / 6 + grain;
+        if (x) ctx.lineTo(x, py);
+        else ctx.moveTo(x, py);
+      }
+      ctx.stroke();
+    }
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(floor ? 4 : 3, floor ? 5 : 2);
+  return texture;
+}
+
+/** Granulação sutil para a parede reagir à luz sem parecer um plano liso. */
+export function plasterTexture() {
+  const canvas = document.createElement('canvas');
+  canvas.width = canvas.height = 128;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#738096';
+  ctx.fillRect(0, 0, 128, 128);
+  for (let i = 0; i < 900; i++) {
+    const shade = 104 + Math.round((Math.sin(i * 19.37) * 0.5 + 0.5) * 28);
+    ctx.fillStyle = `rgba(${shade},${shade + 8},${shade + 18},0.12)`;
+    ctx.fillRect((i * 47) % 128, (i * 83) % 128, 1, 1);
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(5, 3);
+  return texture;
+}
+
 /** Janela noturna: prédios em silhueta e janelas acesas em duas temperaturas de cor. */
 function cityTexture() {
   const canvas = document.createElement('canvas');
@@ -118,21 +177,36 @@ function posterTexture() {
 /** Sala, não vazio: parede, janela, cartaz, estante, planta, livros e poeira em suspensão. */
 export function buildAtmosphere(world) {
   const { scene } = world;
-  const architectural = world.material(0x314766, 0.48, 0.3);
-  const wall = world.material(0x16233f, 0.95);
+  const architectural = world.material(0x314766, 0.78, 0.12);
+  const wall = world.material(0x27344b, 0.96);
+  wall.map = plasterTexture();
+  wall.bumpMap = wall.map;
+  wall.bumpScale = 0.006;
 
-  // Parede de fundo e piso distante fecham o ambiente.
+  // Parede, piso e rodapé fecham o ambiente e recebem sombras de contato.
   const back = world.mesh(new THREE.PlaneGeometry(14, 8), wall, [0, 2.6, -2.7]);
   back.castShadow = false;
   back.receiveShadow = true;
+  const floor = world.mesh(
+    new THREE.PlaneGeometry(14, 12),
+    new THREE.MeshStandardMaterial({ map: woodTexture({ floor: true }), roughness: 0.9 }),
+    [0, -0.073, -0.3],
+  );
+  floor.rotation.x = -Math.PI / 2;
+  floor.castShadow = false;
+  floor.receiveShadow = true;
+  world.box([0, 0.015, -2.64], [9.2, 0.16, 0.1], world.material(0x25344c, 0.9));
   for (const x of [-4.6, 4.6]) {
-    const side = world.mesh(new THREE.PlaneGeometry(6, 8), wall, [x, 2.6, 0.3]);
+    const sideMaterial = wall.clone();
+    sideMaterial.map = plasterTexture();
+    sideMaterial.bumpMap = sideMaterial.map;
+    const side = world.mesh(new THREE.PlaneGeometry(6, 8), sideMaterial, [x, 2.6, 0.3]);
     side.rotation.y = x < 0 ? Math.PI / 2 : -Math.PI / 2;
     side.castShadow = false;
   }
 
   // Janela: a cidade acesa dá profundidade e explica a luz fria da cena.
-  const frame = world.material(0x2a3b5c, 0.5, 0.4);
+  const frame = world.material(0x2a3446, 0.52, 0.28);
   const windowGroup = new THREE.Group();
   windowGroup.position.set(2.75, 2.5, -2.63);
   scene.add(windowGroup);
@@ -143,6 +217,20 @@ export function buildAtmosphere(world) {
     windowGroup,
   );
   city.castShadow = city.receiveShadow = false;
+  const glass = world.mesh(
+    new THREE.PlaneGeometry(2.38, 1.48),
+    new THREE.MeshPhysicalMaterial({
+      color: 0xa9c7e8,
+      transparent: true,
+      opacity: 0.09,
+      roughness: 0.16,
+      metalness: 0.08,
+      depthWrite: false,
+    }),
+    [0, 0, 0.045],
+    windowGroup,
+  );
+  glass.castShadow = glass.receiveShadow = false;
   for (const [x, y, w, h] of [
     [0, 0.78, 2.56, 0.08],
     [0, -0.78, 2.56, 0.08],
@@ -152,6 +240,25 @@ export function buildAtmosphere(world) {
   ]) {
     world.box([x, y, 0.03], [w, h, 0.07], frame, windowGroup);
   }
+  world.box([0, -0.86, 0.1], [2.72, 0.11, 0.3], frame, windowGroup);
+
+  // Cortina, amarrações e varão dão profundidade doméstica à janela.
+  const curtain = world.material(0x4a5267, 0.98);
+  curtain.bumpMap = fabricTexture();
+  curtain.bumpScale = 0.008;
+  for (const side of [-1, 1]) {
+    const panelGeometry = new THREE.PlaneGeometry(0.38, 1.82, 12, 20);
+    const positions = panelGeometry.attributes.position;
+    for (let i = 0; i < positions.count; i++) {
+      const x = positions.getX(i);
+      positions.setZ(i, Math.sin((x / 0.38 + 0.5) * Math.PI * 5) * 0.025);
+    }
+    panelGeometry.computeVertexNormals();
+    const panel = world.mesh(panelGeometry, curtain, [side * 1.43, -0.02, 0.12], windowGroup);
+    panel.rotation.z = side * 0.025;
+    world.box([side * 1.43, -0.12, 0.17], [0.33, 0.055, 0.09], frame, windowGroup);
+  }
+  world.limb([-1.6, 0.98, 0.13], [1.6, 0.98, 0.13], 0.024, frame, windowGroup);
 
   // Cartaz e prateleira do outro lado equilibram a composição.
   const poster = world.mesh(
@@ -162,6 +269,9 @@ export function buildAtmosphere(world) {
   poster.castShadow = false;
   const shelf = world.material(0x33445f, 0.8);
   world.box([-2.5, 1.86, -2.5], [1.5, 0.05, 0.3], shelf);
+  for (const x of [-2.98, -2.02]) {
+    world.box([x, 1.73, -2.49], [0.055, 0.24, 0.18], frame);
+  }
   const spines = [0x8ea6cf, 0x2f4f78, 0xc0c7d2, 0x6f86ad, 0x3c5a86];
   spines.forEach((color, i) => {
     const book = world.box(
@@ -172,13 +282,106 @@ export function buildAtmosphere(world) {
     book.rotation.z = i === 4 ? 0.22 : 0;
   });
 
+  // Canto de leitura à esquerda: preenche o vazio sem competir com a mesa principal.
+  const cabinet = world.material(0x28364b, 0.86);
+  world.box([-4.22, 1.02, -2.38], [0.6, 2.02, 0.42], cabinet);
+  for (const y of [0.42, 1.02, 1.62]) {
+    world.box([-4.22, y, -2.14], [0.56, 0.045, 0.4], frame);
+  }
+  const cornerSpines = [0x9c6f61, 0xb3a181, 0x687f9e, 0x405775];
+  cornerSpines.forEach((color, i) => {
+    const book = world.box(
+      [-4.04 - i * 0.095, 1.19, -2.12],
+      [0.075, 0.28 + (i % 2) * 0.055, 0.25],
+      world.material(color, 0.88),
+    );
+    book.rotation.z = i === 3 ? -0.13 : 0;
+  });
+  world.box([-4.22, 1.78, -2.1], [0.38, 0.26, 0.16], world.material(0x66748b, 0.9));
+
+  const floorLamp = world.material(0x4c5665, 0.42, 0.58);
+  world.mesh(new THREE.CylinderGeometry(0.2, 0.23, 0.035, 28), floorLamp, [-3.2, 0.02, -1.72]);
+  world.limb([-3.2, 0.04, -1.72], [-3.2, 2.06, -1.72], 0.022, floorLamp);
+  const floorShade = world.mesh(
+    new THREE.ConeGeometry(0.27, 0.38, 32, 1, true),
+    world.material(0x8d8275, 0.92),
+    [-3.2, 2.19, -1.72],
+  );
+  floorShade.castShadow = true;
+  const floorBulb = world.mesh(
+    new THREE.CircleGeometry(0.19, 28),
+    new THREE.MeshBasicMaterial({ color: 0xffdfb3, side: THREE.DoubleSide }),
+    [-3.2, 2.01, -1.72],
+  );
+  floorBulb.rotation.x = Math.PI / 2;
+  floorBulb.castShadow = floorBulb.receiveShadow = false;
+  const readingLight = new THREE.PointLight(0xffc98f, 2.4, 3.2);
+  readingLight.position.set(-3.2, 1.95, -1.55);
+  scene.add(readingLight);
+
+  // Primeiro plano esquerdo: objetos ligados à rotina de estudo, não decoração gratuita.
+  const backpack = new THREE.Group();
+  backpack.position.set(-2.62, 0.4, 0.42);
+  backpack.rotation.set(0, 0.16, -0.09);
+  scene.add(backpack);
+  const backpackMaterial = world.material(0x354765, 0.98);
+  backpackMaterial.bumpMap = fabricTexture();
+  backpackMaterial.bumpScale = 0.012;
+  world.box([0, 0, 0], [0.58, 0.72, 0.25], backpackMaterial, backpack);
+  const pocket = world.box(
+    [0, -0.13, 0.155],
+    [0.43, 0.28, 0.095],
+    world.material(0x2b3a55, 0.98),
+    backpack,
+  );
+  pocket.rotation.x = -0.04;
+  world.limb(
+    [-0.17, 0.025, 0.21],
+    [0.17, 0.025, 0.21],
+    0.006,
+    world.material(0x8795aa, 0.6),
+    backpack,
+  );
+  const handle = world.mesh(
+    new THREE.TorusGeometry(0.105, 0.018, 8, 20, Math.PI),
+    backpackMaterial,
+    [0, 0.4, 0],
+    backpack,
+  );
+  handle.rotation.y = Math.PI;
+
+  const powerStrip = world.box(
+    [-3.35, 0.055, 0.38],
+    [0.38, 0.075, 0.15],
+    world.material(0xd0d3d5, 0.8),
+  );
+  powerStrip.rotation.y = -0.12;
+  for (const x of [-3.46, -3.35, -3.24]) {
+    world.mesh(
+      new THREE.CylinderGeometry(0.024, 0.024, 0.005, 16),
+      world.material(0x5e646d, 0.72),
+      [x, 0.095, 0.38],
+    );
+  }
+  const cable = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(-3.17, 0.07, 0.37),
+    new THREE.Vector3(-2.9, 0.065, 0.18),
+    new THREE.Vector3(-2.35, 0.07, 0.05),
+    new THREE.Vector3(-1.72, 0.18, -0.12),
+  ]);
+  world.mesh(
+    new THREE.TubeGeometry(cable, 28, 0.009, 7, false),
+    world.material(0x242a34, 0.86),
+    [0, 0, 0],
+  );
+
   // O arco continua emoldurando a estação de trabalho.
   const lit = new THREE.MeshStandardMaterial({
     color: 0x9aaecd,
     emissive: 0x7396d2,
-    emissiveIntensity: 0.55,
-    roughness: 0.35,
-    metalness: 0.4,
+    emissiveIntensity: 0.18,
+    roughness: 0.68,
+    metalness: 0.16,
   });
   const arch = world.mesh(
     new THREE.TorusGeometry(2.04, 0.045, 12, 100, Math.PI),
@@ -276,6 +479,27 @@ export function buildHoodie(world, material, parent) {
     shoulder.rotation.z = side * 0.28;
     shoulder.rotation.x = -0.08;
   }
+
+  // Barra canelada e costuras laterais discretas dão escala e acabamento à roupa.
+  const stitch = material.clone();
+  stitch.color.copy(material.color).multiplyScalar(1.32);
+  stitch.roughness = 0.82;
+  const hem = world.mesh(
+    new THREE.TorusGeometry(0.345, 0.012, 6, 48),
+    stitch,
+    [0, 0.13, 0],
+    parent,
+  );
+  hem.rotation.x = Math.PI / 2;
+  hem.scale.z = 0.68;
+  for (const side of [-1, 1]) {
+    const seam = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(side * 0.36, 0.72, 0.06),
+      new THREE.Vector3(side * 0.355, 0.48, 0.12),
+      new THREE.Vector3(side * 0.33, 0.22, 0.12),
+    ]);
+    world.mesh(new THREE.TubeGeometry(seam, 18, 0.004, 5, false), stitch, [0, 0, 0], parent);
+  }
   return torso;
 }
 
@@ -304,8 +528,11 @@ export function buildHand(world, side, { skin }, parent) {
   const hand = new THREE.Group();
   // A mão fica alguns centímetros acima da base do notebook; antes, dedos e palma
   // atravessavam o teclado e desapareciam por causa do teste de profundidade.
-  hand.position.set(side * 0.29, 0.55, -1.055);
+  const resting = side < 0 ? { x: -0.305, y: 0.565, z: -1.04 } : { x: 0.285, y: 0.54, z: -1.075 };
+  hand.position.set(resting.x, resting.y, resting.z);
+  hand.userData.restY = resting.y;
   hand.rotation.y = side * 0.06;
+  hand.rotation.z = side < 0 ? 0.025 : -0.04;
   parent.add(hand);
   const palm = world.ellipsoid([0, 0, 0], [0.1, 0.05, 0.12], skin, hand);
   palm.castShadow = true;

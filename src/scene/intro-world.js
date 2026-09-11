@@ -2,6 +2,7 @@ import * as THREE from '../../vendor/three.module.js';
 import {
   roundedBox,
   fabricTexture,
+  woodTexture,
   buildAtmosphere,
   buildHoodie,
   curvedSleeve,
@@ -116,8 +117,8 @@ export class IntroWorld {
   }
 
   buildLighting() {
-    this.scene.add(new THREE.HemisphereLight(0xd6e5ff, 0x172644, 1.5));
-    const key = new THREE.DirectionalLight(0xdce7ff, 2.5);
+    this.scene.add(new THREE.HemisphereLight(0xd6e5ff, 0x172644, 1.25));
+    const key = new THREE.DirectionalLight(0xdce7ff, 2.15);
     key.position.set(3, 7, 4);
     key.castShadow = true;
     key.shadow.mapSize.set(1024, 1024);
@@ -127,13 +128,13 @@ export class IntroWorld {
     key.shadow.camera.bottom = -5;
     key.shadow.normalBias = 0.025;
     this.scene.add(key);
-    const rim = new THREE.DirectionalLight(0x8facff, 2.6);
+    const rim = new THREE.DirectionalLight(0x8facff, 2.15);
     rim.position.set(-4, 4, -3);
     this.scene.add(rim);
-    const warm = new THREE.PointLight(0xffd0a4, 11, 6.5);
+    const warm = new THREE.PointLight(0xffd0a4, 8.5, 6.5);
     warm.position.set(-1.5, 2.5, -0.5);
     this.scene.add(warm);
-    this.screenLight = new THREE.PointLight(0xb9ddff, 3.2, 3.2);
+    this.screenLight = new THREE.PointLight(0xb9ddff, 2.8, 3.2);
     this.screenLight.position.set(0.15, 2, -0.45);
     this.scene.add(this.screenLight);
     const city = new THREE.PointLight(0x6f9cd8, 2.2, 6);
@@ -142,10 +143,13 @@ export class IntroWorld {
   }
 
   buildRoom() {
-    const desk = this.material(0x9ca8b8, 0.48, 0.15);
+    const desk = this.material(0xffffff, 0.64, 0.04);
+    desk.map = woodTexture();
+    desk.bumpMap = desk.map;
+    desk.bumpScale = 0.012;
     const metal = this.material(0x506281, 0.33, 0.6);
     this.box([0, 1.45, -0.35], [3.7, 0.12, 1.7], desk);
-    this.box([0, 1.512, -0.35], [3.62, 0.008, 1.62], this.material(0xb6bfca, 0.72));
+    this.box([0, 1.512, -0.35], [3.62, 0.008, 1.62], this.material(0xd0b8a7, 0.72));
     for (const x of [-1.55, 1.55]) {
       this.box([x, 0.71, -0.35], [0.07, 1.4, 0.9], metal);
       this.box([x, 0.055, -0.35], [0.36, 0.07, 1.05], metal);
@@ -179,6 +183,11 @@ export class IntroWorld {
 
     // Caneca, caderno e caneta: uma bancada com escala humana.
     const ceramic = this.material(0xd8e2ef, 0.3);
+    this.mesh(
+      new THREE.CylinderGeometry(0.135, 0.135, 0.008, 32),
+      this.material(0x374259, 0.92),
+      [1.12, 1.522, -0.48],
+    );
     this.mesh(new THREE.CylinderGeometry(0.105, 0.09, 0.22, 32), ceramic, [1.12, 1.64, -0.48]);
     this.mesh(
       new THREE.CylinderGeometry(0.087, 0.087, 0.006, 32),
@@ -189,6 +198,31 @@ export class IntroWorld {
     const notebook = this.box([-1.16, 1.543, 0.08], [0.47, 0.03, 0.61], this.material(0x96acc8));
     notebook.rotation.y = -0.2;
     this.limb([-1.34, 1.568, -0.06], [-1.2, 1.568, 0.3], 0.012, metal);
+
+    // Mouse pequeno e assimétrico: um detalhe cotidiano que evita a composição de catálogo.
+    const mouse = this.ellipsoid(
+      [0.73, 1.605, -0.16],
+      [0.075, 0.025, 0.105],
+      this.material(0x29364d, 0.72),
+    );
+    mouse.rotation.y = -0.14;
+    this.mesh(
+      new THREE.BoxGeometry(0.004, 0.004, 0.048),
+      this.material(0x7487a3, 0.5),
+      [0.73, 1.631, -0.19],
+    ).rotation.y = -0.14;
+
+    const cableCurve = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(0.73, 1.617, -0.26),
+      new THREE.Vector3(0.77, 1.617, -0.38),
+      new THREE.Vector3(0.69, 1.617, -0.55),
+      new THREE.Vector3(0.64, 1.617, -0.69),
+    ]);
+    this.mesh(
+      new THREE.TubeGeometry(cableCurve, 20, 0.006, 6, false),
+      this.material(0x20293a, 0.8),
+      [0, 0, 0],
+    );
 
     // Um tapete fosco substitui o pedestal com anéis luminosos e deixa a cena mais natural.
     const rugMaterial = this.material(0x182139, 1);
@@ -379,8 +413,23 @@ export class IntroWorld {
     hoodie.bumpMap = fabricTexture();
     hoodie.bumpScale = 0.006;
     const seams = this.material(0x283f6d, 0.88);
-    const skin = this.material(0xb78265, 0.8);
-    const hair = this.material(0x2a262e, 0.62, 0.06);
+    const skin = new THREE.MeshPhysicalMaterial({
+      color: 0xb98265,
+      roughness: 0.72,
+      sheen: 0.12,
+      sheenColor: 0xffc1a2,
+      sheenRoughness: 0.82,
+    });
+    const hair = new THREE.MeshPhysicalMaterial({
+      color: 0x29252d,
+      roughness: 0.56,
+      metalness: 0,
+      sheen: 0.28,
+      sheenColor: 0x8f8296,
+      sheenRoughness: 0.7,
+      clearcoat: 0.06,
+      clearcoatRoughness: 0.72,
+    });
     const trousers = this.material(0x33435b, 0.96);
     const shoe = this.material(0xd9e1ec, 0.65);
     const chair = this.material(0x243650, 0.7, 0.15);
@@ -389,11 +438,12 @@ export class IntroWorld {
     this.person.position.set(0, 1.18, 0.83);
     this.scene.add(this.person);
     this.torso = new THREE.Group();
+    this.torso.rotation.y = -0.025;
     this.person.add(this.torso);
     buildHoodie(this, hoodie, this.torso);
 
     this.head = new THREE.Group();
-    this.head.position.set(0, 1.12, -0.01);
+    this.head.position.set(0.018, 1.12, -0.01);
     this.torso.add(this.head);
     this.mesh(new THREE.CylinderGeometry(0.105, 0.12, 0.22, 24), skin, [0, 0.035, 0], this.head);
     this.ellipsoid([0, 0.27, -0.02], [0.205, 0.275, 0.213], skin, this.head);
@@ -432,6 +482,7 @@ export class IntroWorld {
     this.fingers = [];
     for (const side of [-1, 1]) {
       const arm = new THREE.Group();
+      arm.rotation.z = side < 0 ? -0.018 : 0.026;
       this.torso.add(arm);
       curvedSleeve(this, side, hoodie, arm);
       this.limb([side * 0.31, 0.455, -0.88], [side * 0.28, 0.5, -0.99], 0.085, seams, arm);
@@ -446,23 +497,30 @@ export class IntroWorld {
         }),
       );
 
+      const legOffset =
+        side < 0 ? { x: 0.025, y: -0.02, z: -0.03 } : { x: -0.01, y: 0.015, z: 0.025 };
       this.limb(
         [side * 0.2, 0.03, -0.04],
-        [side * 0.27, -0.06, -0.62],
+        [side * (0.27 + legOffset.x), -0.06 + legOffset.y, -0.62 + legOffset.z],
         0.17,
         trousers,
         this.person,
       );
       this.limb(
-        [side * 0.27, -0.06, -0.62],
-        [side * 0.27, -0.94, -0.54],
+        [side * (0.27 + legOffset.x), -0.06 + legOffset.y, -0.62 + legOffset.z],
+        [side * (0.27 + legOffset.x), -0.94 + legOffset.y, -0.54 + legOffset.z],
         0.127,
         trousers,
         this.person,
       );
-      this.ellipsoid([side * 0.27, -1.03, -0.65], [0.14, 0.105, 0.27], shoe, this.person);
+      this.ellipsoid(
+        [side * (0.27 + legOffset.x), -1.03 + legOffset.y, -0.65 + legOffset.z],
+        [0.14, 0.105, 0.27],
+        shoe,
+        this.person,
+      );
       this.box(
-        [side * 0.27, -1.106, -0.67],
+        [side * (0.27 + legOffset.x), -1.106 + legOffset.y, -0.67 + legOffset.z],
         [0.255, 0.028, 0.41],
         this.material(0x9eafc8),
         this.person,
@@ -548,7 +606,7 @@ export class IntroWorld {
     });
     this.hands.forEach((hand, i) => {
       hand.rotation.x = Math.sin(t * 2.6 + i * 2.1) * 0.035 * bursts;
-      hand.position.y = 0.55 + Math.sin(t * 1.3 + i) * 0.004;
+      hand.position.y = hand.userData.restY + Math.sin(t * 1.3 + i) * 0.004;
     });
   }
 
@@ -575,11 +633,12 @@ export class IntroWorld {
         this.dust.rotation.y = Math.sin(t * 0.08) * 0.05;
         this.dust.position.y = Math.sin(t * 0.14) * 0.05;
       }
-      this.torso.rotation.z = Math.sin(t * 0.65) * 0.014;
-      this.torso.rotation.x = -0.045 + Math.sin(t * 0.85) * 0.012;
+      this.torso.rotation.z = 0.006 + Math.sin(t * 0.65) * 0.011;
+      this.torso.rotation.x = -0.052 + Math.sin(t * 0.85) * 0.01;
       this.torso.position.y = Math.sin(t * 1.45) * 0.008;
-      this.head.rotation.y = Math.sin(t * 0.43) * 0.035 + Math.sin(t * 0.11) * 0.06;
-      this.head.rotation.x = -0.06 + Math.sin(t * 0.7) * 0.025;
+      this.head.rotation.y = 0.025 + Math.sin(t * 0.43) * 0.03 + Math.sin(t * 0.11) * 0.045;
+      this.head.rotation.x = -0.07 + Math.sin(t * 0.7) * 0.018;
+      this.head.rotation.z = -0.018 + Math.sin(t * 0.37) * 0.008;
       this.arms.forEach((arm, i) => {
         arm.rotation.x = Math.sin(t * 3.2 + i * 1.8) * 0.006;
       });
